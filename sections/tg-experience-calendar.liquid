@@ -1,0 +1,211 @@
+{%- comment -%}
+  Experience calendar. Reads the "experience" metaobject entries (Content ›
+  Metaobjects), sorts them by start date and splits them into upcoming and past.
+  Tabs and city chips filter the cards without a page reload (tg-calendar.js).
+
+  Status: the entry's status field wins, except that an "upcoming" (or empty)
+  entry whose start date has passed is treated as past automatically.
+{%- endcomment -%}
+{%- liquid
+  assign today = 'now' | date: '%Y-%m-%d'
+  assign upcoming_list = ''
+  assign past_list = ''
+  assign city_list = ''
+-%}
+
+{%- paginate shop.metaobjects.experience.values by 250 -%}
+  {%- for entry in shop.metaobjects.experience.values -%}
+    {%- liquid
+      assign status = entry.status.value | downcase | strip
+      assign start = entry.start_date.value | date: '%Y-%m-%d'
+      if start == blank
+        assign start = '9999-12-31'
+      endif
+      if status == blank or status == 'upcoming'
+        if start < today
+          assign status = 'past'
+        else
+          assign status = 'upcoming'
+        endif
+      endif
+
+      assign key = start | append: '|' | append: entry.system.handle
+      if status == 'past'
+        assign past_list = past_list | append: key | append: '##'
+      else
+        assign upcoming_list = upcoming_list | append: key | append: '##'
+      endif
+
+      assign city_name = entry.city.value.name.value
+      if city_name != blank
+        assign city_list = city_list | append: city_name | append: '##'
+      endif
+    -%}
+  {%- endfor -%}
+{%- endpaginate -%}
+
+{%- liquid
+  assign upcoming_keys = upcoming_list | split: '##' | sort
+  assign past_keys = past_list | split: '##' | sort | reverse
+  assign city_names = city_list | split: '##' | uniq | sort_natural
+  assign tabs = 'all,upcoming,past' | split: ','
+  assign has_entries = false
+  if upcoming_keys.size > 0 or past_keys.size > 0
+    assign has_entries = true
+  endif
+-%}
+
+<section
+  id="{{ section.settings.anchor | default: 'calendar' | handle }}"
+  class="section calendar{% if section.settings.surface %} section--surface{% endif %}"
+>
+  <div class="page-width">
+    <tg-calendar data-default-tab="{{ section.settings.default_tab }}">
+      <div class="calendar__header">
+        <div class="section-heading">
+          {%- if section.settings.kicker != blank -%}
+            <span class="kicker">{{ section.settings.kicker | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="h1"><em>{{ section.settings.heading | escape }}</em></h2>
+          {%- endif -%}
+          {%- if section.settings.note != blank -%}
+            <div class="section-heading__intro rte">{{ section.settings.note }}</div>
+          {%- endif -%}
+        </div>
+
+        {%- if has_entries -%}
+          <div class="seg" role="group" aria-label="{{ 'sections.calendar.filter_time' | t }}">
+            {%- for tab in tabs -%}
+              <button
+                type="button"
+                class="seg-opt"
+                data-tab="{{ tab }}"
+                aria-pressed="{% if tab == section.settings.default_tab %}true{% else %}false{% endif %}"
+              >
+                {%- case tab -%}
+                  {%- when 'upcoming' -%}
+                    {{- 'sections.calendar.tabs.upcoming' | t -}}
+                  {%- when 'past' -%}
+                    {{- 'sections.calendar.tabs.past' | t -}}
+                  {%- else -%}
+                    {{- 'sections.calendar.tabs.all' | t -}}
+                {%- endcase -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if city_names.size > 1 -%}
+        <div class="calendar__cities" role="group" aria-label="{{ 'sections.calendar.filter_city' | t }}">
+          <button type="button" class="chip" data-city="all" aria-pressed="true">
+            {{- 'sections.calendar.all_cities' | t -}}
+          </button>
+          {%- for city_name in city_names -%}
+            <button type="button" class="chip" data-city="{{ city_name | handle }}" aria-pressed="false">
+              {{- city_name | escape -}}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if has_entries -%}
+        <div class="calendar__group" data-group="upcoming" {% if upcoming_keys.size == 0 %}hidden{% endif %}>
+          <h3 class="calendar__group-title">
+            {% render 'tg-icon', icon: 'calendar' %}
+            {{ 'sections.calendar.upcoming' | t }}
+          </h3>
+          <ul class="calendar__upcoming" role="list">
+            {%- for key in upcoming_keys -%}
+              {%- assign handle = key | split: '|' | last -%}
+              {%- assign entry = shop.metaobjects.experience[handle] -%}
+              <li data-card data-status="upcoming" data-city="{{ entry.city.value.name.value | handle }}">
+                {% render 'tg-experience-card', entry: entry %}
+              </li>
+            {%- endfor -%}
+          </ul>
+          <p class="calendar__empty text-muted" data-empty hidden>{{ 'sections.calendar.none_in_city' | t }}</p>
+        </div>
+
+        <div class="calendar__group" data-group="past" {% if past_keys.size == 0 %}hidden{% endif %}>
+          <h3 class="calendar__group-title">
+            {% render 'tg-icon', icon: 'clock' %}
+            {{ 'sections.calendar.past' | t }}
+          </h3>
+          <ul class="calendar__past" role="list">
+            {%- for key in past_keys limit: section.settings.max_past -%}
+              {%- assign handle = key | split: '|' | last -%}
+              {%- assign entry = shop.metaobjects.experience[handle] -%}
+              <li data-card data-status="past" data-city="{{ entry.city.value.name.value | handle }}">
+                {% render 'tg-experience-card', entry: entry, past: true %}
+              </li>
+            {%- endfor -%}
+          </ul>
+          <p class="calendar__empty text-muted" data-empty hidden>{{ 'sections.calendar.none_in_city' | t }}</p>
+        </div>
+      {%- else -%}
+        <div class="calendar__placeholder card">
+          <p class="card-title">{{ 'sections.calendar.coming_soon' | t }}</p>
+          {%- if request.design_mode -%}
+            <p class="card-body">
+              Add entries in Content › Metaobjects › Experience and they appear here automatically.
+            </p>
+          {%- endif -%}
+          {%- if settings.social_instagram_link != blank -%}
+            <a class="btn btn-ghost" href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener">
+              {{- 'sections.calendar.follow_instagram' | t -}}
+              {% render 'tg-icon', icon: 'arrow-up-right' %}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </tg-calendar>
+  </div>
+</section>
+
+<script src="{{ 'tg-calendar.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Experience calendar",
+  "tag": "div",
+  "class": "section-calendar",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Experiences come from Content › Metaobjects › Experience. Each entry's start date sorts it and moves it to past on its own."
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "calendar" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "experience calendar" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "different spots, same heartbeat." },
+    { "type": "richtext", "id": "note", "label": "Note" },
+    {
+      "type": "select",
+      "id": "default_tab",
+      "label": "Default tab",
+      "options": [
+        { "value": "all", "label": "All" },
+        { "value": "upcoming", "label": "Upcoming" },
+        { "value": "past", "label": "Past" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "range",
+      "id": "max_past",
+      "label": "Past experiences to show",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 8
+    },
+    { "type": "checkbox", "id": "surface", "label": "Use surface background", "default": false }
+  ],
+  "presets": [
+    {
+      "name": "Experience calendar"
+    }
+  ]
+}
+{% endschema %}

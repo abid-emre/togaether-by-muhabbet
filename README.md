@@ -23,6 +23,47 @@ editor are committed back to the branch by Shopify.
   content with the free Translate & Adapt app. The header switcher appears once
   more than one language is published.
 
+## Homepage sections
+
+The homepage (`templates/index.json`) is built from these sections, in order.
+Each can be edited, reordered or hidden in the theme editor.
+
+| Section | Anchor | Notes |
+| --- | --- | --- |
+| Hero (`tg-hero`) | `#hero` | Photo, optional desktop-only video, two-line heading, three buttons |
+| Memory room (`tg-memory-room`) | `#memory-room` | Auto-sliding photo carousel with captions, four Instagram tiles |
+| Approach (`tg-approach`) | `#approach` | Four steps, four principles, two-column story |
+| Stats (`tg-stats`) | `#stats` | Numbers count up on scroll; one can count the city entries |
+| Experience calendar (`tg-experience-calendar`) | `#calendar` | Reads experience entries; filters by time and city |
+| First time FAQ (`tg-faq`) | `#first-time` | Accordions plus FAQ structured data for search |
+| Host (`tg-host`) | `#host` | Portrait and quote, "become a host" pop-up form |
+| Testimonials (`tg-testimonials`) | `#voices` | Reads testimonial entries, "share your experience" pop-up form |
+| Partner logos (`tg-logo-wall`) | `#partners` | Logo grid, muted until hover |
+| Contact (`tg-contact`) | `#contact` | Newsletter signup and corporate enquiry form |
+
+Forms are Shopify contact forms, so host applications, testimonials and
+corporate enquiries arrive in the store's email inbox. Newsletter sign-ups join
+the customer list tagged `newsletter`, ready for Shopify Email.
+
+### Metaobjects the homepage reads
+
+Create these in **Settings › Custom data › Metaobjects**. Field keys must match.
+
+**Experience** (`experience`): `name`, `status` (upcoming / ongoing / past),
+`introduction`, `location`, `city` (reference to City), `start_date` (date),
+`dates_text`, `duration`, `event_type`, `language`, `price`, `quota` (integer),
+`seats_left` (integer), `host` (reference to Host), `photo` (image),
+`instagram_post` (URL), `more_photos` (URL). An upcoming entry whose start date
+has passed moves to past on its own. `seats_left` of 0 shows "join the waitlist".
+
+**City** (`city`): `name`, `country`.
+
+**Testimonial** (`testimonial`): `name`, `quote`, `experience` (reference to
+Experience), `photo` (image), `consent` (true/false). Turn on the "Publishing"
+option so new entries stay as drafts until approved.
+
+**Host** (`host`): `name`, `role`, `one_line`, `portrait` (image).
+
 ## Structure
 
 | Folder | What's in it |

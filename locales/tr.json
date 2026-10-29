@@ -11,7 +11,8 @@
       "whatsapp": "whatsapp topluluğu",
       "linkedin": "linkedin",
       "email": "e-posta"
-    }
+    },
+    "close": "Kapat"
   },
   "accessibility": {
     "skip_to_content": "İçeriğe geç"
@@ -21,6 +22,47 @@
       "menu": "Menü",
       "open_menu": "Menüyü aç",
       "close_menu": "Menüyü kapat"
+    },
+    "memory_room": {
+      "hint": "açıklama için fotoğrafın üzerine gelin",
+      "previous": "Önceki fotoğraf",
+      "next": "Sonraki fotoğraf",
+      "view_post": "Instagram'da gör"
+    },
+    "calendar": {
+      "filter_time": "Göster",
+      "filter_city": "Şehir",
+      "tabs": {
+        "all": "tümü",
+        "upcoming": "yaklaşan",
+        "past": "geçmiş"
+      },
+      "all_cities": "tüm şehirler",
+      "upcoming": "yaklaşan",
+      "past": "geçmiş",
+      "none_in_city": "Bu şehir için henüz bir şey yok.",
+      "coming_soon": "Yeni buluşmalar planlanıyor.",
+      "follow_instagram": "instagram'da takip edin",
+      "status": {
+        "upcoming": "yaklaşan",
+        "ongoing": "devam ediyor",
+        "full": "dolu"
+      },
+      "places_left": {
+        "zero": "0 yer kaldı",
+        "one": "1 yer kaldı",
+        "other": "{{ count }} yer kaldı"
+      },
+      "meta": {
+        "city": "Şehir",
+        "date": "Tarih",
+        "duration": "Süre",
+        "type": "Tür",
+        "language": "Dil",
+        "price": "Ücret"
+      },
+      "apply": "bu deneyime başvur",
+      "join_waitlist": "bekleme listesine katıl"
     }
   },
   "products": {
@@ -70,5 +112,26 @@
       "title": "Hediye kartınız",
       "expired": "Bu hediye kartının süresi dolmuş."
     }
+  },
+  "date_formats": {
+    "abbreviated_date": "%-d %b"
+  },
+  "forms": {
+    "first_name": "ad",
+    "last_name": "soyad",
+    "name": "ad soyad",
+    "your_name": "adınız",
+    "email": "e-posta",
+    "work_email": "iş e-postası",
+    "company": "şirketiniz veya ekibiniz",
+    "country_code": "ülke kodu",
+    "phone": "telefon",
+    "optional": "(isteğe bağlı)",
+    "motivation": "neden ev sahibi olmak istiyorsunuz?",
+    "experience": "hangi deneyim?",
+    "your_words": "sizin sözleriniz",
+    "testimonial_consent": "Sözlerimin Togaether web sitesinde paylaşılmasını kabul ediyorum.",
+    "team_message": "bize ekibinizden bahsedin…",
+    "send": "gönder"
   }
 }

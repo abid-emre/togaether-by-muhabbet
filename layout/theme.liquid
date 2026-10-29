@@ -35,6 +35,7 @@
 
     {% render 'tg-css-variables' %}
     {{ 'tg-theme.css' | asset_url | stylesheet_tag }}
+    {{ 'tg-sections.css' | asset_url | stylesheet_tag }}
 
     <script>
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');

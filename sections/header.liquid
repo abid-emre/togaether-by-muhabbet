@@ -1,6 +1,6 @@
 {%- comment -%}
   Header: logo, main menu, language switcher, Instagram and an "apply" button.
-  Below 990px the menu, languages and Instagram move into the ☰ drawer.
+  Below 1100px the menu, languages and Instagram move into the ☰ drawer.
 {%- endcomment -%}
 {%- liquid
   assign apply_block = section.blocks | where: 'type', 'apply_button' | first
@@ -71,7 +71,7 @@
       {%- if apply_block and apply_block.settings.label != blank -%}
         <a
           class="btn btn-primary"
-          href="{{ apply_block.settings.link | default: '#' }}"
+          href="{{ apply_block.settings.link | default: '#' | escape }}"
           {{ apply_block.shopify_attributes }}
         >
           {{- apply_block.settings.label | escape -}}
@@ -116,7 +116,7 @@
 
     <div class="menu-drawer__footer">
       {%- if apply_block and apply_block.settings.label != blank -%}
-        <a class="btn btn-solid btn-block" href="{{ apply_block.settings.link | default: '#' }}" data-drawer-link>
+        <a class="btn btn-solid btn-block" href="{{ apply_block.settings.link | default: '#' | escape }}" data-drawer-link>
           {{- apply_block.settings.label | escape -}}
         </a>
       {%- endif -%}
@@ -198,9 +198,10 @@
           "default": "apply to join"
         },
         {
-          "type": "url",
+          "type": "text",
           "id": "link",
-          "label": "Link"
+          "label": "Link",
+          "info": "A page link like /pages/about, a homepage anchor like /#calendar, or a full URL."
         }
       ]
     }

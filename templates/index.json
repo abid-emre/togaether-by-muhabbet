@@ -1,18 +1,452 @@
 {
   "sections": {
-    "intro": {
-      "type": "tg-rich-text",
+    "hero": {
+      "type": "tg-hero",
       "settings": {
-        "kicker": "togaether by muhabbet",
-        "heading": "come as you are. leave connected.",
-        "display_heading": true,
-        "text": "<p>Our new home is on its way.</p>",
-        "alignment": "center",
+        "overlay": 35,
+        "height": "large",
+        "heading_line_1": "come as you are.",
+        "heading_line_2": "leave connected.",
+        "text": "<p>Small, hosted circles where strangers pause, play, share and gather.</p>",
+        "button_1_label": "apply to join",
+        "button_1_link": "/#calendar",
+        "button_2_label": "see the calendar",
+        "button_2_link": "/#calendar",
+        "button_3_label": "our approach",
+        "button_3_link": "/#approach",
+        "anchor": "hero"
+      }
+    },
+    "memory_room": {
+      "type": "tg-memory-room",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "event": "collective flow",
+            "city": "büyükada",
+            "year": "2026"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "event": "community gathering",
+            "city": "kazdağları",
+            "year": "2026"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "event": "artistic expression",
+            "city": "izmir",
+            "year": "2026"
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "event": "pause play and connect",
+            "city": "barcelona",
+            "year": "2026"
+          }
+        },
+        "ig_1": {
+          "type": "ig_tile",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig_2": {
+          "type": "ig_tile",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig_3": {
+          "type": "ig_tile",
+          "settings": {
+            "link": ""
+          }
+        },
+        "ig_4": {
+          "type": "ig_tile",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4",
+        "ig_1",
+        "ig_2",
+        "ig_3",
+        "ig_4"
+      ],
+      "settings": {
+        "anchor": "memory-room",
+        "kicker": "our memory room",
+        "heading": "memories that still breathe.",
+        "intro": "<p>Moments from circles past, in Istanbul, Barcelona, Izmir and beyond.</p>",
+        "autoplay_seconds": 4.5,
+        "per_view": 3,
+        "instagram_heading": "lately on instagram",
+        "instagram_label": "follow @togaether_by_muhabbet"
+      }
+    },
+    "approach": {
+      "type": "tg-approach",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "clock",
+            "title": "pause",
+            "text": "<p>We arrive, slow down and leave the day at the door.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkle",
+            "title": "play",
+            "text": "<p>Light, playful prompts help everyone loosen up and feel at ease.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "quote",
+            "title": "share",
+            "text": "<p>Guided conversation where every voice has room, and listening matters as much as speaking.</p>"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "icon": "heart",
+            "title": "gather",
+            "text": "<p>We close together, often over food, and leave a little more connected.</p>"
+          }
+        },
+        "principle_1": {
+          "type": "principle",
+          "settings": {
+            "icon": "grid",
+            "label": "intentional structure",
+            "text": "<p>A clear rhythm gives the evening shape, so nobody has to wonder what comes next.</p>"
+          }
+        },
+        "principle_2": {
+          "type": "principle",
+          "settings": {
+            "icon": "lines",
+            "label": "four steps in harmony",
+            "text": "<p>Pause, play, share and gather flow into each other.</p>"
+          }
+        },
+        "principle_3": {
+          "type": "principle",
+          "settings": {
+            "icon": "flower",
+            "label": "hosted & guided together",
+            "text": "<p>A host holds the space from the first hello to the last goodbye.</p>"
+          }
+        },
+        "principle_4": {
+          "type": "principle",
+          "settings": {
+            "icon": "waves",
+            "label": "fluid flow",
+            "text": "<p>The structure is there to support you, never to rush you.</p>"
+          }
+        },
+        "story": {
+          "type": "story",
+          "settings": {
+            "heading": "our story",
+            "text": "<p>Togaether began with muhabbet, the Turkish art of warm, unhurried conversation. We wanted to bring that feeling to people who had never met, in cities where it is easy to feel alone in a crowd.</p><p>Since then, thousands of strangers have sat down together in living rooms, gardens and studios across Türkiye and Spain. Some came back as friends. Some came back as hosts.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "principle_1",
+        "principle_2",
+        "principle_3",
+        "principle_4",
+        "story"
+      ],
+      "settings": {
+        "anchor": "approach",
+        "kicker": "our approach",
+        "heading": "our approach and experience",
+        "intro": "<p>Every circle follows the same gentle rhythm, so strangers can settle in and meet each other for real.</p>",
         "surface": false
+      }
+    },
+    "stats": {
+      "type": "tg-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "prefix": "approx.",
+            "number": "5700",
+            "suffix": "",
+            "label": "participants",
+            "count_cities": false
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "prefix": "over",
+            "number": "1900",
+            "suffix": "",
+            "label": "hours of conversation",
+            "count_cities": false
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "prefix": "over",
+            "number": "450",
+            "suffix": "",
+            "label": "events",
+            "count_cities": false
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "prefix": "about",
+            "number": "150",
+            "suffix": "",
+            "label": "venues",
+            "count_cities": false
+          }
+        },
+        "stat_5": {
+          "type": "stat",
+          "settings": {
+            "prefix": "",
+            "number": "16",
+            "suffix": "+",
+            "label": "countries & cities",
+            "count_cities": false
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4",
+        "stat_5"
+      ],
+      "settings": {
+        "anchor": "stats",
+        "kicker": "until today",
+        "heading": "what we have gathered so far.",
+        "count_up": true,
+        "surface": true
+      }
+    },
+    "calendar": {
+      "type": "tg-experience-calendar",
+      "settings": {
+        "anchor": "calendar",
+        "kicker": "experience calendar",
+        "heading": "different spots, same heartbeat.",
+        "note": "",
+        "default_tab": "all",
+        "max_past": 8,
+        "surface": false
+      }
+    },
+    "faq": {
+      "type": "tg-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "will i be seated with strangers?",
+            "answer": "<p>Yes, and that's the point. Most people come on their own. Your host welcomes everyone and guides the first moments, so nobody is left on the sidelines.</p>"
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "do i have to speak?",
+            "answer": "<p>Only as much as you'd like. Listening is a full part of the circle, and you can always pass.</p>"
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "what language is the event in?",
+            "answer": "<p>Each experience lists its language in the calendar, usually English, Turkish or Spanish, and sometimes a mix.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "how long does it last?",
+            "answer": "<p>Most circles last two to three hours. The exact duration is shown on each experience.</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "what does it cost?",
+            "answer": "<p>The price is listed on each experience and usually covers the venue, materials and something to eat or drink.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "why do i need to apply?",
+            "answer": "<p>Circles are small, so a short application helps us bring together a group that will feel good together. We reply to everyone.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5",
+        "question_6"
+      ],
+      "settings": {
+        "anchor": "first-time",
+        "kicker": "first time here?",
+        "heading": "what to expect at your first circle.",
+        "box_title": "why we ask you to apply",
+        "box_text": "<p>Each circle is small and carefully balanced. A short application helps us bring together people who will feel at home with each other.</p>",
+        "surface": false
+      }
+    },
+    "host": {
+      "type": "tg-host",
+      "settings": {
+        "anchor": "host",
+        "kicker": "the host",
+        "heading": "facilitating connection.",
+        "quote": "<p>I hold the space so everyone else can simply arrive. The rest happens between the people in the room.</p>",
+        "signature": "jamie",
+        "surface": true,
+        "button_label": "become a host",
+        "form_intro": "<p>Tell us a little about yourself and why you'd like to host a circle.</p>",
+        "success_message": "Thank you. We'll be in touch soon."
+      }
+    },
+    "testimonials": {
+      "type": "tg-testimonials",
+      "settings": {
+        "anchor": "voices",
+        "kicker": "voices of togaether",
+        "heading": "in their own words.",
+        "max_items": 6,
+        "surface": false,
+        "button_label": "share your experience",
+        "form_intro": "<p>We'd love to hear how your circle felt. If you'd like a photo next to your words, reply to our email with it.</p>",
+        "success_message": "Thank you for sharing. We'll read it with care."
+      }
+    },
+    "partners": {
+      "type": "tg-logo-wall",
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "name": "partner"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "name": "partner"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "name": "partner"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "name": "partner"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "name": "partner"
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "name": "partner"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6"
+      ],
+      "settings": {
+        "anchor": "partners",
+        "kicker": "partners",
+        "heading": "the spaces and teams that trust us.",
+        "text": "",
+        "muted": true,
+        "surface": true
+      }
+    },
+    "contact": {
+      "type": "tg-contact",
+      "settings": {
+        "anchor": "contact",
+        "surface": false,
+        "newsletter_heading": "letters to the circle",
+        "newsletter_text": "<p>News of upcoming circles and a few words from our hosts.</p>",
+        "newsletter_button": "stay connected",
+        "newsletter_note": "once a month.",
+        "newsletter_success": "Thank you. Your first letter is on its way soon.",
+        "corporate_heading": "where corporate culture meets genuine connection",
+        "corporate_text": "<p>Bring a hosted circle to your team, offsite or event.</p>",
+        "corporate_button": "start the conversation",
+        "corporate_success": "Thank you. We'll reply within a few days."
       }
     }
   },
   "order": [
-    "intro"
+    "hero",
+    "memory_room",
+    "approach",
+    "stats",
+    "calendar",
+    "faq",
+    "host",
+    "testimonials",
+    "partners",
+    "contact"
   ]
 }
