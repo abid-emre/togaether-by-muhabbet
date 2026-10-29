@@ -1,0 +1,117 @@
+{%- comment -%}
+  The host: portrait, quote and signature, with a "become a host" button that
+  opens an application form. The form is a Shopify contact form tagged
+  "host application", so it arrives in the store's inbox.
+{%- endcomment -%}
+{%- assign dialog_id = 'HostDialog-' | append: section.id -%}
+{%- assign form_id = 'HostForm-' | append: section.id -%}
+
+<section
+  id="{{ section.settings.anchor | default: 'host' | handle }}"
+  class="section host{% if section.settings.surface %} section--surface{% endif %}"
+>
+  <div class="page-width host__grid">
+    <div class="host__portrait">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 900
+          | image_tag:
+            class: 'plate',
+            loading: 'lazy',
+            widths: '400, 600, 900',
+            sizes: '(min-width: 750px) 33vw, 100vw'
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'plate host__placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="host__content">
+      {%- if section.settings.kicker != blank -%}
+        <span class="kicker">{{ section.settings.kicker | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="host__quote rte">{{ section.settings.quote }}</blockquote>
+      {%- endif -%}
+      {%- if section.settings.signature != blank -%}
+        <p class="host__signature">— {{ section.settings.signature | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <button type="button" class="btn btn-primary" data-dialog-open="{{ dialog_id }}">
+          {{- section.settings.button_label | escape -}}
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <dialog class="dialog" id="{{ dialog_id }}" aria-labelledby="{{ dialog_id }}-title" data-dialog>
+    <div class="dialog__header">
+      <h3 class="dialog-title" id="{{ dialog_id }}-title">{{ section.settings.button_label | escape }}</h3>
+      <button type="button" class="btn btn-icon" data-dialog-close>
+        {% render 'tg-icon', icon: 'close' %}
+        <span class="visually-hidden">{{ 'general.close' | t }}</span>
+      </button>
+    </div>
+    {%- if section.settings.form_intro != blank -%}
+      <div class="dialog-body rte">{{ section.settings.form_intro }}</div>
+    {%- endif -%}
+
+    {%- form 'contact', id: form_id -%}
+      {% render 'tg-form-status', form: form, success: section.settings.success_message %}
+      <input type="hidden" name="contact[form]" value="host application">
+      <div class="field-row">
+        <div class="field">
+          <label for="{{ form_id }}-first">{{ 'forms.first_name' | t }}</label>
+          <input class="input" id="{{ form_id }}-first" type="text" name="contact[first_name]" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="{{ form_id }}-last">{{ 'forms.last_name' | t }}</label>
+          <input class="input" id="{{ form_id }}-last" type="text" name="contact[last_name]" autocomplete="family-name" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="{{ form_id }}-email">{{ 'forms.email' | t }}</label>
+        <input class="input" id="{{ form_id }}-email" type="email" name="contact[email]" autocomplete="email" required>
+      </div>
+      {% render 'tg-phone-field', id: form_id, default_code: '+90', required: true %}
+      <div class="field">
+        <label for="{{ form_id }}-motivation">{{ 'forms.motivation' | t }}</label>
+        <textarea class="input" id="{{ form_id }}-motivation" name="contact[body]" required></textarea>
+      </div>
+      <div class="dialog-actions">
+        <button type="submit" class="btn btn-solid">{{ 'forms.send' | t }}</button>
+      </div>
+    {%- endform -%}
+  </dialog>
+</section>
+
+{% schema %}
+{
+  "name": "Host",
+  "tag": "div",
+  "class": "section-host",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "host" },
+    { "type": "image_picker", "id": "image", "label": "Portrait" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "the host" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "facilitating connection." },
+    { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>I hold the space so everyone else can simply arrive. The rest happens between the people in the room.</p>" },
+    { "type": "text", "id": "signature", "label": "Signature", "default": "jamie" },
+    { "type": "checkbox", "id": "surface", "label": "Use surface background", "default": true },
+    { "type": "header", "content": "Host application form" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "become a host" },
+    { "type": "richtext", "id": "form_intro", "label": "Form intro", "default": "<p>Tell us a little about yourself and why you'd like to host a circle.</p>" },
+    { "type": "text", "id": "success_message", "label": "Thank-you message", "default": "Thank you. We'll be in touch soon." },
+    { "type": "paragraph", "content": "Applications arrive in your store's email inbox, marked \"host application\"." }
+  ],
+  "presets": [
+    {
+      "name": "Host"
+    }
+  ]
+}
+{% endschema %}

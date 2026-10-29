@@ -1,0 +1,15 @@
+{%- comment -%}
+  Success and error messages for a Shopify form. Several contact forms share a
+  page, so tg-theme.js hides the status message on the forms that weren't sent.
+
+  Accepts:
+  - form {Object}: the current form
+  - success {String}: thank-you message
+{%- endcomment -%}
+{%- if form.posted_successfully? -%}
+  <p class="form-message form-message--success" role="status" data-form-status>{{ success }}</p>
+{%- elsif form.errors -%}
+  <div class="form-message form-message--error" role="alert" data-form-status>
+    {{ form.errors | default_errors }}
+  </div>
+{%- endif -%}

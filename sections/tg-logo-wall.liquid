@@ -1,0 +1,83 @@
+{%- comment -%}
+  Partners: a grid of logos, optionally muted until hover.
+{%- endcomment -%}
+<section
+  id="{{ section.settings.anchor | default: 'partners' | handle }}"
+  class="section logo-wall{% if section.settings.surface %} section--surface{% endif %}"
+>
+  <div class="page-width">
+    <div class="section-heading">
+      {%- if section.settings.kicker != blank -%}
+        <span class="kicker">{{ section.settings.kicker | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="section-heading__intro rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <ul class="logo-wall__grid{% if section.settings.muted %} logo-wall__grid--muted{% endif %}" role="list">
+      {%- for block in section.blocks -%}
+        <li class="logo-wall__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" target="_blank" rel="noopener">
+          {%- endif -%}
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 400
+              | image_tag: alt: block.settings.name, loading: 'lazy', class: 'logo-wall__logo'
+            }}
+          {%- else -%}
+            <span class="logo-wall__name">{{ block.settings.name | escape }}</span>
+          {%- endif -%}
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Partner logos",
+  "tag": "div",
+  "class": "section-logo-wall",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "partners" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "partners" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "the spaces and teams that trust us." },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "checkbox", "id": "muted", "label": "Muted until hover", "default": true },
+    { "type": "checkbox", "id": "surface", "label": "Use surface background", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo", "info": "Transparent PNG or SVG works best." },
+        { "type": "text", "id": "name", "label": "Name", "default": "partner", "info": "Used as alt text, and shown when there's no logo." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Partner logos",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

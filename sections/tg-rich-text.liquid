@@ -20,7 +20,7 @@
     {%- endif -%}
     {%- if section.settings.button_label != blank -%}
       <p class="section__actions">
-        <a class="btn btn-primary" href="{{ section.settings.button_link | default: '#' }}">
+        <a class="btn btn-primary" href="{{ section.settings.button_link | default: '#' | escape }}">
           {{- section.settings.button_label | escape -}}
         </a>
       </p>
@@ -67,9 +67,10 @@
       "label": "Button label"
     },
     {
-      "type": "url",
+      "type": "text",
       "id": "button_link",
-      "label": "Button link"
+      "label": "Button link",
+      "info": "A page link like /pages/about, a homepage anchor like /#calendar, or a full URL."
     },
     {
       "type": "select",

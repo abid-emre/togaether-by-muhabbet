@@ -1,0 +1,218 @@
+{%- comment -%}
+  Hero: full-bleed photo (or muted video on desktop) with a two-line heading,
+  a short text and up to three buttons.
+{%- endcomment -%}
+{%- liquid
+  assign desktop_image = section.settings.image
+  assign mobile_image = section.settings.mobile_image | default: desktop_image
+  assign overlay = section.settings.overlay | divided_by: 100.0
+-%}
+
+<section
+  id="{{ section.settings.anchor | default: 'hero' | handle }}"
+  class="hero hero--{{ section.settings.height }}"
+  style="--hero-overlay: {{ overlay }};"
+>
+  <div class="hero__media">
+    {%- if desktop_image != blank -%}
+      <picture>
+        <source
+          media="(min-width: 750px)"
+          srcset="{{ desktop_image | image_url: width: 1500 }} 1500w, {{ desktop_image | image_url: width: 2200 }} 2200w, {{ desktop_image | image_url: width: 3000 }} 3000w"
+          sizes="100vw"
+        >
+        {{
+          mobile_image
+          | image_url: width: 1200
+          | image_tag:
+            class: 'hero__image',
+            alt: desktop_image.alt,
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '600, 900, 1200',
+            sizes: '100vw'
+        }}
+      </picture>
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__image hero__placeholder' }}
+    {%- endif -%}
+
+    {%- if section.settings.video != blank -%}
+      {{
+        section.settings.video
+        | video_tag:
+          class: 'hero__video',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          preload: 'none',
+          image_size: '1500x'
+      }}
+    {%- endif -%}
+  </div>
+
+  <div class="hero__inner page-width">
+    <div class="hero__content">
+      {%- if section.settings.heading_line_1 != blank or section.settings.heading_line_2 != blank -%}
+        <h2 class="display hero__heading">
+          {{- section.settings.heading_line_1 | escape -}}
+          {%- if section.settings.heading_line_2 != blank -%}
+            <br><span class="hero__accent">{{ section.settings.heading_line_2 | escape }}</span>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="hero__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      <div class="hero__actions">
+        {%- if section.settings.button_1_label != blank -%}
+          <a class="btn btn-solid" href="{{ section.settings.button_1_link | default: '#' | escape }}">
+            {{- section.settings.button_1_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a class="btn btn-secondary hero__btn-secondary" href="{{ section.settings.button_2_link | default: '#' | escape }}">
+            {{- section.settings.button_2_label | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_3_label != blank -%}
+          <a class="hero__link" href="{{ section.settings.button_3_link | default: '#' | escape }}">
+            {{- section.settings.button_3_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "class": "section-hero",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "Landscape, at least 2200px wide."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile photo",
+      "info": "Optional portrait crop for phones. Uses the photo above if empty."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Optional, Shopify-hosted. Plays muted on desktop only and stays off for visitors who prefer reduced motion."
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Overlay strength",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "full", "label": "Full screen" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "come as you are."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "info": "Shown in the accent colour.",
+      "default": "leave connected."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Small, hosted circles where strangers pause, play, share and gather.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 label",
+      "default": "apply to join"
+    },
+    {
+      "type": "text",
+      "id": "button_1_link",
+      "label": "Button 1 link",
+      "info": "A page link like /pages/about, a homepage anchor like /#calendar, or a full URL."
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 label",
+      "default": "see the calendar"
+    },
+    {
+      "type": "text",
+      "id": "button_2_link",
+      "label": "Button 2 link",
+      "info": "A page link like /pages/about, a homepage anchor like /#calendar, or a full URL."
+    },
+    {
+      "type": "text",
+      "id": "button_3_label",
+      "label": "Text link label",
+      "default": "our approach"
+    },
+    {
+      "type": "text",
+      "id": "button_3_link",
+      "label": "Text link",
+      "info": "A page link like /pages/about, a homepage anchor like /#calendar, or a full URL."
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Anchor id",
+      "default": "hero"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

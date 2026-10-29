@@ -1,0 +1,131 @@
+{%- comment -%}
+  One experience in the calendar.
+
+  Accepts:
+  - entry {Object}: an "experience" metaobject entry
+  - past {Boolean}: render the small past-event card
+{%- endcomment -%}
+{%- liquid
+  assign title = entry.name.value | default: entry.system.handle
+  assign city_name = entry.city.value.name.value
+  assign dates = entry.dates_text.value
+  if dates == blank and entry.start_date.value != blank
+    assign dates = entry.start_date.value | date: format: 'abbreviated_date'
+  endif
+  assign url = entry.system.url
+-%}
+
+{%- if past -%}
+  {%- if url != blank -%}
+    <a class="past-card" href="{{ url }}">
+  {%- else -%}
+    <div class="past-card">
+  {%- endif -%}
+    {%- if entry.photo.value != blank -%}
+      {{
+        entry.photo.value
+        | image_url: width: 600
+        | image_tag:
+          class: 'past-card__image plate',
+          alt: title,
+          loading: 'lazy',
+          widths: '300, 450, 600',
+          sizes: '(min-width: 990px) 25vw, 50vw'
+      }}
+    {%- else -%}
+      <span class="past-card__image past-card__image--empty plate" aria-hidden="true"></span>
+    {%- endif -%}
+    <span class="past-card__title">{{ title | escape }}</span>
+    <span class="card-meta">
+      {%- if city_name != blank -%}{{ city_name | escape }}{%- endif -%}
+      {%- if city_name != blank and dates != blank %} · {% endif -%}
+      {%- if dates != blank -%}{{ dates | escape }}{%- endif -%}
+    </span>
+  {%- if url != blank -%}
+    </a>
+  {%- else -%}
+    </div>
+  {%- endif -%}
+{%- else -%}
+  {%- liquid
+    assign status = entry.status.value | downcase | strip
+    assign seats = entry.seats_left.value
+    assign is_full = false
+    if seats != blank and seats <= 0
+      assign is_full = true
+    endif
+  -%}
+  <article class="experience-card card{% if is_full %} experience-card--full{% endif %}">
+    <div class="experience-card__top">
+      <span class="tag {% if is_full %}tag-neutral{% else %}tag-accent{% endif %}">
+        {%- if is_full -%}
+          {{ 'sections.calendar.status.full' | t }}
+        {%- elsif status == 'ongoing' -%}
+          {{ 'sections.calendar.status.ongoing' | t }}
+        {%- else -%}
+          {{ 'sections.calendar.status.upcoming' | t }}
+        {%- endif -%}
+      </span>
+      {%- if seats != blank -%}
+        <span class="experience-card__seats{% unless is_full %} experience-card__seats--open{% endunless %}">
+          {{- 'sections.calendar.places_left' | t: count: seats -}}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <h4 class="experience-card__title">
+      {%- if url != blank -%}
+        <a href="{{ url }}">{{ title | escape }}</a>
+      {%- else -%}
+        {{ title | escape }}
+      {%- endif -%}
+    </h4>
+
+    <dl class="experience-card__meta">
+      {%- if city_name != blank -%}
+        <div>
+          <dt>{% render 'tg-icon', icon: 'pin' %}<span class="visually-hidden">{{ 'sections.calendar.meta.city' | t }}</span></dt>
+          <dd>{{ city_name | escape }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if dates != blank -%}
+        <div>
+          <dt>{% render 'tg-icon', icon: 'calendar' %}<span class="visually-hidden">{{ 'sections.calendar.meta.date' | t }}</span></dt>
+          <dd>{{ dates | escape }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if entry.duration.value != blank -%}
+        <div>
+          <dt>{% render 'tg-icon', icon: 'clock' %}<span class="visually-hidden">{{ 'sections.calendar.meta.duration' | t }}</span></dt>
+          <dd>{{ entry.duration.value | escape }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if entry.event_type.value != blank -%}
+        <div>
+          <dt>{% render 'tg-icon', icon: 'home' %}<span class="visually-hidden">{{ 'sections.calendar.meta.type' | t }}</span></dt>
+          <dd>{{ entry.event_type.value | escape }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if entry.language.value != blank -%}
+        <div>
+          <dt>{% render 'tg-icon', icon: 'language' %}<span class="visually-hidden">{{ 'sections.calendar.meta.language' | t }}</span></dt>
+          <dd>{{ entry.language.value | escape }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if entry.price.value != blank -%}
+        <div>
+          <dt>{% render 'tg-icon', icon: 'tag' %}<span class="visually-hidden">{{ 'sections.calendar.meta.price' | t }}</span></dt>
+          <dd>{{ entry.price.value | escape }}</dd>
+        </div>
+      {%- endif -%}
+    </dl>
+
+    <a class="btn {% if is_full %}btn-secondary{% else %}btn-primary{% endif %} experience-card__cta" href="{{ url | default: '#contact' }}">
+      {%- if is_full -%}
+        {{ 'sections.calendar.join_waitlist' | t }}
+      {%- else -%}
+        {{ 'sections.calendar.apply' | t }}
+      {%- endif -%}
+    </a>
+  </article>
+{%- endif -%}

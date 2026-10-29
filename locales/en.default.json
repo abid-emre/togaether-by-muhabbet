@@ -11,7 +11,8 @@
       "whatsapp": "whatsapp community",
       "linkedin": "linkedin",
       "email": "email"
-    }
+    },
+    "close": "Close"
   },
   "accessibility": {
     "skip_to_content": "Skip to content"
@@ -21,6 +22,47 @@
       "menu": "Menu",
       "open_menu": "Open menu",
       "close_menu": "Close menu"
+    },
+    "memory_room": {
+      "hint": "hover a photo for its caption",
+      "previous": "Previous photo",
+      "next": "Next photo",
+      "view_post": "View on Instagram"
+    },
+    "calendar": {
+      "filter_time": "Show",
+      "filter_city": "City",
+      "tabs": {
+        "all": "all",
+        "upcoming": "upcoming",
+        "past": "past"
+      },
+      "all_cities": "all cities",
+      "upcoming": "upcoming",
+      "past": "past",
+      "none_in_city": "Nothing here for this city yet.",
+      "coming_soon": "New circles are being planned.",
+      "follow_instagram": "follow along on instagram",
+      "status": {
+        "upcoming": "upcoming",
+        "ongoing": "ongoing",
+        "full": "full"
+      },
+      "places_left": {
+        "zero": "0 places left",
+        "one": "1 place left",
+        "other": "{{ count }} places left"
+      },
+      "meta": {
+        "city": "City",
+        "date": "Date",
+        "duration": "Duration",
+        "type": "Type",
+        "language": "Language",
+        "price": "Price"
+      },
+      "apply": "apply for this experience",
+      "join_waitlist": "join the waitlist"
     }
   },
   "products": {
@@ -70,5 +112,26 @@
       "title": "Your gift card",
       "expired": "This gift card has expired."
     }
+  },
+  "date_formats": {
+    "abbreviated_date": "%-d %b"
+  },
+  "forms": {
+    "first_name": "first name",
+    "last_name": "last name",
+    "name": "name",
+    "your_name": "your name",
+    "email": "email",
+    "work_email": "work email",
+    "company": "your company or team",
+    "country_code": "country code",
+    "phone": "phone",
+    "optional": "(optional)",
+    "motivation": "why would you like to host?",
+    "experience": "which experience?",
+    "your_words": "your words",
+    "testimonial_consent": "I'm happy for Togaether to share my words on the website.",
+    "team_message": "tell us about your team…",
+    "send": "send"
   }
 }

@@ -1,0 +1,151 @@
+{%- comment -%}
+  Voices of togaether. Reads "testimonial" metaobject entries; only active
+  entries with consent show, so a new entry stays hidden until you approve it.
+  "Share your experience" opens a contact form that arrives in the store inbox.
+{%- endcomment -%}
+{%- assign dialog_id = 'ShareDialog-' | append: section.id -%}
+{%- assign form_id = 'ShareForm-' | append: section.id -%}
+{%- assign shown = 0 -%}
+
+<section
+  id="{{ section.settings.anchor | default: 'voices' | handle }}"
+  class="section testimonials{% if section.settings.surface %} section--surface{% endif %}"
+>
+  <div class="page-width">
+    <div class="section-heading section-heading--split">
+      <div>
+        {%- if section.settings.kicker != blank -%}
+          <span class="kicker">{{ section.settings.kicker | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.button_label != blank -%}
+        <button type="button" class="btn btn-secondary" data-dialog-open="{{ dialog_id }}">
+          {{- section.settings.button_label | escape -}}
+        </button>
+      {%- endif -%}
+    </div>
+
+    <ul class="testimonials__list" role="list">
+      {%- for entry in shop.metaobjects.testimonial.values -%}
+        {%- if entry.consent.value == false or shown >= section.settings.max_items -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign shown = shown | plus: 1 -%}
+        {%- liquid
+          assign person = entry.name.value
+          assign initials = ''
+          assign words = person | split: ' '
+          for word in words limit: 2
+            assign letter = word | slice: 0
+            assign initials = initials | append: letter
+          endfor
+        -%}
+        <li class="testimonial">
+          <blockquote class="testimonial__quote">{{ entry.quote.value | escape | newline_to_br }}</blockquote>
+          <div class="testimonial__person">
+            {%- if entry.photo.value != blank -%}
+              {{
+                entry.photo.value
+                | image_url: width: 120, height: 120, crop: 'center'
+                | image_tag: class: 'testimonial__avatar', alt: person, loading: 'lazy'
+              }}
+            {%- else -%}
+              <span class="testimonial__avatar testimonial__avatar--initials" aria-hidden="true">
+                {{- initials | downcase -}}
+              </span>
+            {%- endif -%}
+            <span class="testimonial__meta">
+              {{- person | escape -}}
+              {%- if entry.experience.value != blank %} · {{ entry.experience.value.name.value | escape }}{% endif -%}
+            </span>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if shown == 0 and request.design_mode -%}
+      <p class="card text-muted">
+        Add entries in Content › Metaobjects › Testimonial. Only active entries with consent appear here.
+      </p>
+    {%- endif -%}
+  </div>
+
+  <dialog class="dialog" id="{{ dialog_id }}" aria-labelledby="{{ dialog_id }}-title" data-dialog>
+    <div class="dialog__header">
+      <h3 class="dialog-title" id="{{ dialog_id }}-title">{{ section.settings.button_label | escape }}</h3>
+      <button type="button" class="btn btn-icon" data-dialog-close>
+        {% render 'tg-icon', icon: 'close' %}
+        <span class="visually-hidden">{{ 'general.close' | t }}</span>
+      </button>
+    </div>
+    {%- if section.settings.form_intro != blank -%}
+      <div class="dialog-body rte">{{ section.settings.form_intro }}</div>
+    {%- endif -%}
+
+    {%- form 'contact', id: form_id -%}
+      {% render 'tg-form-status', form: form, success: section.settings.success_message %}
+      <input type="hidden" name="contact[form]" value="testimonial">
+      <div class="field-row">
+        <div class="field">
+          <label for="{{ form_id }}-name">{{ 'forms.name' | t }}</label>
+          <input class="input" id="{{ form_id }}-name" type="text" name="contact[name]" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="{{ form_id }}-email">{{ 'forms.email' | t }}</label>
+          <input class="input" id="{{ form_id }}-email" type="email" name="contact[email]" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="{{ form_id }}-experience">{{ 'forms.experience' | t }}</label>
+        <input class="input" id="{{ form_id }}-experience" type="text" name="contact[experience]">
+      </div>
+      <div class="field">
+        <label for="{{ form_id }}-words">{{ 'forms.your_words' | t }}</label>
+        <textarea class="input" id="{{ form_id }}-words" name="contact[body]" required></textarea>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" name="contact[consent]" value="yes" required>
+        <span>{{ 'forms.testimonial_consent' | t }}</span>
+      </label>
+      <div class="dialog-actions">
+        <button type="submit" class="btn btn-solid">{{ 'forms.send' | t }}</button>
+      </div>
+    {%- endform -%}
+  </dialog>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "div",
+  "class": "section-testimonials",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Testimonials come from Content › Metaobjects › Testimonial. Keep new entries as drafts until you approve them."
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "voices" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "voices of togaether" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "in their own words." },
+    { "type": "range", "id": "max_items", "label": "Testimonials to show", "min": 3, "max": 12, "step": 3, "default": 6 },
+    { "type": "checkbox", "id": "surface", "label": "Use surface background", "default": false },
+    { "type": "header", "content": "Share form" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "share your experience" },
+    {
+      "type": "richtext",
+      "id": "form_intro",
+      "label": "Form intro",
+      "default": "<p>We'd love to hear how your circle felt. If you'd like a photo next to your words, reply to our email with it.</p>"
+    },
+    { "type": "text", "id": "success_message", "label": "Thank-you message", "default": "Thank you for sharing. We'll read it with care." }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials"
+    }
+  ]
+}
+{% endschema %}

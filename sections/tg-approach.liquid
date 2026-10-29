@@ -1,0 +1,146 @@
+{%- comment -%}
+  Our approach: four steps (pause, play, share, gather), four principles and a
+  two-column story.
+{%- endcomment -%}
+{%- liquid
+  assign steps = section.blocks | where: 'type', 'step'
+  assign principles = section.blocks | where: 'type', 'principle'
+  assign stories = section.blocks | where: 'type', 'story'
+-%}
+
+<section
+  id="{{ section.settings.anchor | default: 'approach' | handle }}"
+  class="section approach{% if section.settings.surface %} section--surface{% endif %}"
+>
+  <div class="page-width">
+    <div class="section-heading">
+      {%- if section.settings.kicker != blank -%}
+        <span class="kicker">{{ section.settings.kicker | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h1">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="section-heading__intro rte">{{ section.settings.intro }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if steps.size > 0 -%}
+      <ol class="approach__steps" role="list">
+        {%- for block in steps -%}
+          <li class="approach__step" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 700
+                | image_tag:
+                  class: 'approach__image plate',
+                  loading: 'lazy',
+                  widths: '350, 500, 700',
+                  sizes: '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 100vw'
+              }}
+            {%- endif -%}
+            <span class="approach__number">
+              {%- unless block.settings.icon == 'none' -%}
+                {% render 'tg-icon', icon: block.settings.icon %}
+              {%- endunless -%}
+              {{ forloop.index | prepend: '0' | slice: -2, 2 }}
+            </span>
+            <h3 class="approach__title">{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.text != blank -%}
+              <div class="approach__text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+
+    {%- if principles.size > 0 -%}
+      <ul class="approach__principles" role="list">
+        {%- for block in principles -%}
+          <li class="approach__principle" {{ block.shopify_attributes }}>
+            {%- unless block.settings.icon == 'none' -%}
+              {% render 'tg-icon', icon: block.settings.icon, class: 'approach__principle-icon' %}
+            {%- endunless -%}
+            <em class="approach__principle-label">{{ block.settings.label | escape }}</em>
+            {%- if block.settings.text != blank -%}
+              <div class="approach__principle-text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- for block in stories -%}
+      <div class="approach__story" {{ block.shopify_attributes }}>
+        {%- if block.settings.heading != blank -%}
+          <span class="kicker">{{ block.settings.heading | escape }}</span>
+        {%- endif -%}
+        <div class="approach__story-text rte">{{ block.settings.text }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Approach",
+  "tag": "div",
+  "class": "section-approach",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "approach" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "our approach" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "our approach and experience" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Every circle follows the same gentle rhythm, so strangers can settle in and meet each other for real.</p>" },
+    { "type": "checkbox", "id": "surface", "label": "Use surface background", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{"value": "none", "label": "None"}, {"value": "clock", "label": "Clock"}, {"value": "sparkle", "label": "Sparkle"}, {"value": "quote", "label": "Quote"}, {"value": "heart", "label": "Heart"}, {"value": "grid", "label": "Grid"}, {"value": "lines", "label": "Lines"}, {"value": "flower", "label": "Flower"}, {"value": "waves", "label": "Waves"}, {"value": "people", "label": "People"}, {"value": "users", "label": "Two people"}, {"value": "pin", "label": "Pin"}, {"value": "calendar", "label": "Calendar"}, {"value": "language", "label": "Globe"}, {"value": "home", "label": "Home"}, {"value": "building", "label": "Building"}, {"value": "info", "label": "Info"}], "default": "clock" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "pause" },
+        { "type": "richtext", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "principle",
+      "name": "Principle",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{"value": "none", "label": "None"}, {"value": "clock", "label": "Clock"}, {"value": "sparkle", "label": "Sparkle"}, {"value": "quote", "label": "Quote"}, {"value": "heart", "label": "Heart"}, {"value": "grid", "label": "Grid"}, {"value": "lines", "label": "Lines"}, {"value": "flower", "label": "Flower"}, {"value": "waves", "label": "Waves"}, {"value": "people", "label": "People"}, {"value": "users", "label": "Two people"}, {"value": "pin", "label": "Pin"}, {"value": "calendar", "label": "Calendar"}, {"value": "language", "label": "Globe"}, {"value": "home", "label": "Home"}, {"value": "building", "label": "Building"}, {"value": "info", "label": "Info"}], "default": "grid" },
+        { "type": "text", "id": "label", "label": "Label", "default": "intentional structure" },
+        { "type": "richtext", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "story",
+      "name": "Story",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "our story" },
+        { "type": "richtext", "id": "text", "label": "Text", "info": "Flows into two columns on desktop." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Approach",
+      "blocks": [
+        { "type": "step", "settings": { "icon": "clock", "title": "pause" } },
+        { "type": "step", "settings": { "icon": "sparkle", "title": "play" } },
+        { "type": "step", "settings": { "icon": "quote", "title": "share" } },
+        { "type": "step", "settings": { "icon": "heart", "title": "gather" } },
+        { "type": "principle", "settings": { "icon": "grid", "label": "intentional structure" } },
+        { "type": "principle", "settings": { "icon": "lines", "label": "four steps in harmony" } },
+        { "type": "principle", "settings": { "icon": "flower", "label": "hosted & guided together" } },
+        { "type": "principle", "settings": { "icon": "waves", "label": "fluid flow" } },
+        { "type": "story" }
+      ]
+    }
+  ]
+}
+{% endschema %}

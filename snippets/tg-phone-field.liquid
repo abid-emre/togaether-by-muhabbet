@@ -1,0 +1,28 @@
+{%- comment -%}
+  Country code + phone number pair for contact forms.
+
+  Accepts:
+  - id {String}: unique prefix for the field ids
+  - default_code {String}: '+90' or '+34'
+  - required {Boolean}
+{%- endcomment -%}
+{%- assign codes = '+90 türkiye,+34 españa,+44 united kingdom,+49 deutschland,+33 france,+31 nederland,+39 italia,+1 usa / canada' | split: ',' -%}
+<div class="field-row field-row--phone">
+  <div class="field">
+    <label for="{{ id }}-code">{{ 'forms.country_code' | t }}</label>
+    <select class="input" id="{{ id }}-code" name="contact[phone_country]">
+      {%- for code in codes -%}
+        {%- assign value = code | split: ' ' | first -%}
+        {%- assign country = code | remove_first: value | strip -%}
+        <option value="{{ value }}" {% if value == default_code %}selected{% endif %}>{{ value }} ({{ country }})</option>
+      {%- endfor -%}
+    </select>
+  </div>
+  <div class="field">
+    <label for="{{ id }}-phone">
+      {{- 'forms.phone' | t -}}
+      {%- unless required %} {{ 'forms.optional' | t }}{% endunless -%}
+    </label>
+    <input class="input" id="{{ id }}-phone" type="tel" name="contact[phone]" autocomplete="tel-national" {% if required %}required{% endif %}>
+  </div>
+</div>

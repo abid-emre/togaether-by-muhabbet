@@ -11,7 +11,8 @@
       "whatsapp": "comunidad de whatsapp",
       "linkedin": "linkedin",
       "email": "correo"
-    }
+    },
+    "close": "Cerrar"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido"
@@ -21,6 +22,47 @@
       "menu": "Menú",
       "open_menu": "Abrir menú",
       "close_menu": "Cerrar menú"
+    },
+    "memory_room": {
+      "hint": "pasa el cursor sobre una foto para ver su descripción",
+      "previous": "Foto anterior",
+      "next": "Foto siguiente",
+      "view_post": "Ver en Instagram"
+    },
+    "calendar": {
+      "filter_time": "Mostrar",
+      "filter_city": "Ciudad",
+      "tabs": {
+        "all": "todo",
+        "upcoming": "próximos",
+        "past": "pasados"
+      },
+      "all_cities": "todas las ciudades",
+      "upcoming": "próximos",
+      "past": "pasados",
+      "none_in_city": "Todavía no hay nada en esta ciudad.",
+      "coming_soon": "Estamos preparando nuevos círculos.",
+      "follow_instagram": "síguenos en instagram",
+      "status": {
+        "upcoming": "próximo",
+        "ongoing": "en curso",
+        "full": "completo"
+      },
+      "places_left": {
+        "zero": "0 plazas libres",
+        "one": "1 plaza libre",
+        "other": "{{ count }} plazas libres"
+      },
+      "meta": {
+        "city": "Ciudad",
+        "date": "Fecha",
+        "duration": "Duración",
+        "type": "Tipo",
+        "language": "Idioma",
+        "price": "Precio"
+      },
+      "apply": "solicitar esta experiencia",
+      "join_waitlist": "unirme a la lista de espera"
     }
   },
   "products": {
@@ -70,5 +112,26 @@
       "title": "Tu tarjeta regalo",
       "expired": "Esta tarjeta regalo ha caducado."
     }
+  },
+  "date_formats": {
+    "abbreviated_date": "%-d %b"
+  },
+  "forms": {
+    "first_name": "nombre",
+    "last_name": "apellido",
+    "name": "nombre",
+    "your_name": "tu nombre",
+    "email": "correo",
+    "work_email": "correo del trabajo",
+    "company": "tu empresa o equipo",
+    "country_code": "prefijo",
+    "phone": "teléfono",
+    "optional": "(opcional)",
+    "motivation": "¿por qué te gustaría ser anfitrión?",
+    "experience": "¿qué experiencia?",
+    "your_words": "tus palabras",
+    "testimonial_consent": "Acepto que Togaether comparta mis palabras en su web.",
+    "team_message": "cuéntanos sobre tu equipo…",
+    "send": "enviar"
   }
 }

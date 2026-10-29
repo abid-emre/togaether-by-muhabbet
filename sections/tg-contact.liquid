@@ -1,0 +1,116 @@
+{%- comment -%}
+  Contact: "letters to the circle" newsletter signup (Shopify customer form,
+  tagged "newsletter", for Shopify Email) beside a corporate enquiry form
+  (Shopify contact form, marked "corporate").
+{%- endcomment -%}
+{%- assign newsletter_id = 'Newsletter-' | append: section.id -%}
+{%- assign corporate_id = 'CorporateForm-' | append: section.id -%}
+
+<section
+  id="{{ section.settings.anchor | default: 'contact' | handle }}"
+  class="section contact{% if section.settings.surface %} section--surface{% endif %}"
+>
+  <div class="page-width contact__grid">
+    <div class="contact__newsletter">
+      {% render 'tg-icon', icon: 'email', class: 'contact__icon' %}
+      {%- if section.settings.newsletter_heading != blank -%}
+        <h2 class="h1">{{ section.settings.newsletter_heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.newsletter_text != blank -%}
+        <div class="rte">{{ section.settings.newsletter_text }}</div>
+      {%- endif -%}
+
+      {%- form 'customer', id: newsletter_id, class: 'contact__newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="form-message form-message--success" role="status">{{ section.settings.newsletter_success | escape }}</p>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="form-message form-message--error" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <div class="inline-form">
+            <label class="visually-hidden" for="{{ newsletter_id }}-email">{{ 'forms.email' | t }}</label>
+            <input
+              class="input"
+              id="{{ newsletter_id }}-email"
+              type="email"
+              name="contact[email]"
+              autocomplete="email"
+              placeholder="{{ 'forms.email' | t }}"
+              required
+            >
+            <button type="submit" class="btn btn-solid">{{ section.settings.newsletter_button | escape }}</button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+
+      {%- if section.settings.newsletter_note != blank -%}
+        <p class="text-muted contact__note">{{ section.settings.newsletter_note | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="contact__corporate">
+      {% render 'tg-icon', icon: 'building', class: 'contact__icon' %}
+      {%- if section.settings.corporate_heading != blank -%}
+        <h2 class="h2">{{ section.settings.corporate_heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.corporate_text != blank -%}
+        <div class="rte">{{ section.settings.corporate_text }}</div>
+      {%- endif -%}
+
+      {%- form 'contact', id: corporate_id -%}
+        {% render 'tg-form-status', form: form, success: section.settings.corporate_success %}
+        <input type="hidden" name="contact[form]" value="corporate">
+        <div class="field-row">
+          <div class="field">
+            <label for="{{ corporate_id }}-company">{{ 'forms.company' | t }}</label>
+            <input class="input" id="{{ corporate_id }}-company" type="text" name="contact[company]" autocomplete="organization" required>
+          </div>
+          <div class="field">
+            <label for="{{ corporate_id }}-name">{{ 'forms.your_name' | t }}</label>
+            <input class="input" id="{{ corporate_id }}-name" type="text" name="contact[name]" autocomplete="name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="{{ corporate_id }}-email">{{ 'forms.work_email' | t }}</label>
+          <input class="input" id="{{ corporate_id }}-email" type="email" name="contact[email]" autocomplete="email" required>
+        </div>
+        {% render 'tg-phone-field', id: corporate_id, default_code: '+34', required: false %}
+        <div class="field">
+          <label for="{{ corporate_id }}-message">{{ 'forms.team_message' | t }}</label>
+          <textarea class="input" id="{{ corporate_id }}-message" name="contact[body]"></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">{{ section.settings.corporate_button | escape }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "div",
+  "class": "section-contact",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "contact" },
+    { "type": "checkbox", "id": "surface", "label": "Use surface background", "default": false },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "letters to the circle" },
+    { "type": "richtext", "id": "newsletter_text", "label": "Text", "default": "<p>News of upcoming circles and a few words from our hosts.</p>" },
+    { "type": "text", "id": "newsletter_button", "label": "Button label", "default": "stay connected" },
+    { "type": "text", "id": "newsletter_note", "label": "Small note", "default": "once a month." },
+    { "type": "text", "id": "newsletter_success", "label": "Thank-you message", "default": "Thank you. Your first letter is on its way soon." },
+    { "type": "paragraph", "content": "Sign-ups join your customer list with email marketing consent and the \"newsletter\" tag. Send letters with Shopify Email." },
+    { "type": "header", "content": "Corporate enquiries" },
+    { "type": "text", "id": "corporate_heading", "label": "Heading", "default": "where corporate culture meets genuine connection" },
+    { "type": "richtext", "id": "corporate_text", "label": "Text", "default": "<p>Bring a hosted circle to your team, offsite or event.</p>" },
+    { "type": "text", "id": "corporate_button", "label": "Button label", "default": "start the conversation" },
+    { "type": "text", "id": "corporate_success", "label": "Thank-you message", "default": "Thank you. We'll reply within a few days." }
+  ],
+  "presets": [
+    {
+      "name": "Contact"
+    }
+  ]
+}
+{% endschema %}
