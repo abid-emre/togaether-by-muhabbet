@@ -1,0 +1,188 @@
+{%- comment -%}
+  Footer: logo and a short line, then blocks for menus, text (e.g. "where we
+  gather") and follow links. Social links come from Theme settings › Social media.
+{%- endcomment -%}
+<footer class="footer">
+  <div class="page-width">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="{{ routes.root_url }}" class="footer__logo">
+          {%- if section.settings.logo != blank -%}
+            {{ section.settings.logo | image_url: height: 112 | image_tag: alt: shop.name, loading: 'lazy' }}
+          {%- else -%}
+            <span class="header__logo-text">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+        {%- if section.settings.tagline != blank -%}
+          <p>{{ section.settings.tagline | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="footer__block" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'menu' -%}
+              {%- if block.settings.heading != blank -%}
+                <h2 class="footer__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="footer__links" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+            {%- when 'text' -%}
+              {%- if block.settings.heading != blank -%}
+                <h2 class="footer__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              <div class="rte">{{ block.settings.text }}</div>
+
+            {%- when 'social' -%}
+              {%- if block.settings.heading != blank -%}
+                <h2 class="footer__heading">{{ block.settings.heading | escape }}</h2>
+              {%- endif -%}
+              <ul class="footer__links" role="list">
+                {%- if settings.social_whatsapp_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_whatsapp_link }}" target="_blank" rel="noopener">
+                      {% render 'tg-icon', icon: 'whatsapp' %}
+                      {%- if block.settings.whatsapp_label != blank -%}
+                        {{- block.settings.whatsapp_label | escape -}}
+                      {%- else -%}
+                        {{- 'general.social.whatsapp' | t -}}
+                      {%- endif -%}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_instagram_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener">
+                      {% render 'tg-icon', icon: 'instagram' %}
+                      {{- 'general.social.instagram' | t -}}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_linkedin_link != blank -%}
+                  <li>
+                    <a href="{{ settings.social_linkedin_link }}" target="_blank" rel="noopener">
+                      {% render 'tg-icon', icon: 'linkedin' %}
+                      {{- 'general.social.linkedin' | t -}}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.contact_email != blank -%}
+                  <li>
+                    <a href="mailto:{{ settings.contact_email }}">
+                      {% render 'tg-icon', icon: 'email' %}
+                      {{- 'general.social.email' | t -}}
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}</span>
+      {%- if section.settings.show_policies and shop.policies.size > 0 -%}
+        <ul class="footer__policies" role="list">
+          {%- for policy in shop.policies -%}
+            <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Leave empty to show the store name."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Short line under the logo",
+      "default": "come as you are. leave connected."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policies",
+      "label": "Show policy links",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "on this page"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "where we gather"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>türkiye · spain</p><p>barcelona · istanbul · izmir</p>"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Follow links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "follow"
+        },
+        {
+          "type": "text",
+          "id": "whatsapp_label",
+          "label": "WhatsApp label",
+          "default": "whatsapp community"
+        },
+        {
+          "type": "paragraph",
+          "content": "Links are set in Theme settings › Social media. Empty ones are hidden."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+{
+  "general": {
+    "language": "Language",
+    "back_home": "Back to home",
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "social": {
+      "instagram": "instagram",
+      "whatsapp": "whatsapp community",
+      "linkedin": "linkedin",
+      "email": "email"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "open_menu": "Open menu",
+      "close_menu": "Close menu"
+    }
+  },
+  "products": {
+    "product": {
+      "variant": "Edition",
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out"
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "This page wandered off",
+      "subtext": "The page you were looking for doesn't exist."
+    },
+    "search": {
+      "title": "Search",
+      "submit": "Search",
+      "results_count": {
+        "one": "{{ count }} result for \"{{ terms }}\"",
+        "other": "{{ count }} results for \"{{ terms }}\""
+      }
+    },
+    "collection": {
+      "empty": "Nothing here yet."
+    },
+    "list_collections": {
+      "title": "Collections"
+    },
+    "cart": {
+      "title": "Your cart",
+      "quantity": "Quantity",
+      "subtotal": "Subtotal",
+      "update": "Update",
+      "checkout": "Check out",
+      "empty": "Your cart is empty."
+    },
+    "password": {
+      "email": "Your email",
+      "notify": "Keep me posted",
+      "subscribed": "Thank you. We'll write when we open.",
+      "enter_with_password": "Enter with password",
+      "password": "Password",
+      "enter": "Enter",
+      "wrong_password": "That password didn't work."
+    },
+    "gift_card": {
+      "title": "Your gift card",
+      "expired": "This gift card has expired."
+    }
+  }
+}

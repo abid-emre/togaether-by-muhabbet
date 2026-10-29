@@ -1,0 +1,139 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Togaether",
+    "theme_version": "0.1.0",
+    "theme_author": "Togaether by Muhabbet",
+    "theme_documentation_url": "https://github.com/abid-emre/togaether-by-muhabbet",
+    "theme_support_url": "https://github.com/abid-emre/togaether-by-muhabbet/issues"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Classical palette"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#f3f2f2"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface",
+        "default": "#eae9e9",
+        "info": "Used for bands, the footer and photo frames."
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#201f1d"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#b68235"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_2",
+        "label": "Second accent",
+        "default": "#ac803e"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Headings use Cormorant Garamond and body text uses Lora, both included with the theme."
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "label": "Heading size",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "label": "Body text size",
+        "min": 90,
+        "max": 120,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "Page width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1240
+      },
+      {
+        "type": "checkbox",
+        "id": "photo_treatment",
+        "label": "Warm photo treatment",
+        "default": true,
+        "info": "Adds the soft sepia tone from the designs to framed photos."
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "https://instagram.com/togaether_by_muhabbet"
+      },
+      {
+        "type": "text",
+        "id": "social_whatsapp_link",
+        "label": "WhatsApp community",
+        "info": "Invite link, e.g. https://chat.whatsapp.com/…"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "LinkedIn"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Contact email"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Shown at 32 × 32px."
+      }
+    ]
+  }
+]

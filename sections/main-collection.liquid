@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="page-width">
+    <h1 class="main-page__title">{{ collection.title | escape }}</h1>
+    {%- paginate collection.products by 24 -%}
+      {%- if collection.products.size > 0 -%}
+        <ul class="product-grid" role="list">
+          {%- for product in collection.products -%}
+            <li>{% render 'tg-product-card', product: product %}</li>
+          {%- endfor -%}
+        </ul>
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination">{{ paginate | default_pagination }}</nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="empty-state text-muted">{{ 'templates.collection.empty' | t }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

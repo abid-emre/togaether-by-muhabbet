@@ -1,0 +1,74 @@
+{
+  "general": {
+    "language": "Dil",
+    "back_home": "Ana sayfaya dön",
+    "meta": {
+      "tags": "\"{{ tags }}\" etiketli",
+      "page": "Sayfa {{ page }}"
+    },
+    "social": {
+      "instagram": "instagram",
+      "whatsapp": "whatsapp topluluğu",
+      "linkedin": "linkedin",
+      "email": "e-posta"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "İçeriğe geç"
+  },
+  "sections": {
+    "header": {
+      "menu": "Menü",
+      "open_menu": "Menüyü aç",
+      "close_menu": "Menüyü kapat"
+    }
+  },
+  "products": {
+    "product": {
+      "variant": "Baskı",
+      "add_to_cart": "Sepete ekle",
+      "sold_out": "Tükendi"
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "Bu sayfa kaybolmuş",
+      "subtext": "Aradığınız sayfa bulunamadı."
+    },
+    "search": {
+      "title": "Ara",
+      "submit": "Ara",
+      "results_count": {
+        "one": "\"{{ terms }}\" için {{ count }} sonuç",
+        "other": "\"{{ terms }}\" için {{ count }} sonuç"
+      }
+    },
+    "collection": {
+      "empty": "Henüz burada bir şey yok."
+    },
+    "list_collections": {
+      "title": "Koleksiyonlar"
+    },
+    "cart": {
+      "title": "Sepetiniz",
+      "quantity": "Adet",
+      "subtotal": "Ara toplam",
+      "update": "Güncelle",
+      "checkout": "Ödemeye geç",
+      "empty": "Sepetiniz boş."
+    },
+    "password": {
+      "email": "E-posta adresiniz",
+      "notify": "Haber ver",
+      "subscribed": "Teşekkürler. Açıldığımızda size yazacağız.",
+      "enter_with_password": "Şifre ile gir",
+      "password": "Şifre",
+      "enter": "Gir",
+      "wrong_password": "Şifre yanlış."
+    },
+    "gift_card": {
+      "title": "Hediye kartınız",
+      "expired": "Bu hediye kartının süresi dolmuş."
+    }
+  }
+}

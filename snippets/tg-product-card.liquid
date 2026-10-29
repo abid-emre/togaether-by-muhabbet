@@ -1,0 +1,11 @@
+{%- comment -%}
+  Accepts:
+  - product {Object}
+{%- endcomment -%}
+<a class="card product-card" href="{{ product.url }}">
+  {%- if product.featured_media -%}
+    {{ product.featured_media | image_url: width: 600 | image_tag: class: 'plate', loading: 'lazy', sizes: '(min-width: 750px) 33vw, 50vw' }}
+  {%- endif -%}
+  <span class="card-title">{{ product.title | escape }}</span>
+  <span class="card-meta">{{ product.price | money }}</span>
+</a>

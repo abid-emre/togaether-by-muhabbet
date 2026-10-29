@@ -1,0 +1,18 @@
+<article class="section">
+  <div class="page-width page-width--narrow">
+    <span class="kicker">{{ article.published_at | time_tag: format: 'date' }}</span>
+    <h1 class="main-page__title">{{ article.title | escape }}</h1>
+    {%- if article.image -%}
+      {{ article.image | image_url: width: 1400 | image_tag: class: 'plate article__image', loading: 'eager' }}
+    {%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

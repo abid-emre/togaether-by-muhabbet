@@ -1,0 +1,74 @@
+{
+  "general": {
+    "language": "Idioma",
+    "back_home": "Volver al inicio",
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "social": {
+      "instagram": "instagram",
+      "whatsapp": "comunidad de whatsapp",
+      "linkedin": "linkedin",
+      "email": "correo"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Saltar al contenido"
+  },
+  "sections": {
+    "header": {
+      "menu": "Menú",
+      "open_menu": "Abrir menú",
+      "close_menu": "Cerrar menú"
+    }
+  },
+  "products": {
+    "product": {
+      "variant": "Edición",
+      "add_to_cart": "Añadir al carrito",
+      "sold_out": "Agotado"
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "Esta página se ha perdido",
+      "subtext": "La página que buscas no existe."
+    },
+    "search": {
+      "title": "Buscar",
+      "submit": "Buscar",
+      "results_count": {
+        "one": "{{ count }} resultado para \"{{ terms }}\"",
+        "other": "{{ count }} resultados para \"{{ terms }}\""
+      }
+    },
+    "collection": {
+      "empty": "Aún no hay nada aquí."
+    },
+    "list_collections": {
+      "title": "Colecciones"
+    },
+    "cart": {
+      "title": "Tu carrito",
+      "quantity": "Cantidad",
+      "subtotal": "Subtotal",
+      "update": "Actualizar",
+      "checkout": "Finalizar compra",
+      "empty": "Tu carrito está vacío."
+    },
+    "password": {
+      "email": "Tu correo",
+      "notify": "Avísame",
+      "subscribed": "Gracias. Te escribiremos cuando abramos.",
+      "enter_with_password": "Entrar con contraseña",
+      "password": "Contraseña",
+      "enter": "Entrar",
+      "wrong_password": "La contraseña no es correcta."
+    },
+    "gift_card": {
+      "title": "Tu tarjeta regalo",
+      "expired": "Esta tarjeta regalo ha caducado."
+    }
+  }
+}

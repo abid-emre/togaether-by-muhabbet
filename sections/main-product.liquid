@@ -1,0 +1,57 @@
+{%- comment -%}
+  Basic product page so the theme is complete. The designed board-game page
+  (wireframe 1d) replaces this in a later step.
+{%- endcomment -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<section class="section">
+  <div class="page-width product">
+    <div class="product__media">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 1200 | image_tag: class: 'plate', loading: 'eager', sizes: '(min-width: 990px) 50vw, 100vw' }}
+      {%- endif -%}
+    </div>
+
+    <div class="product__info">
+      <h1>{{ product.title | escape }}</h1>
+      <p class="product__price">{{ current_variant.price | money }}</p>
+
+      {%- form 'product', product -%}
+        {%- if product.has_only_default_variant -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {%- else -%}
+          <div class="field">
+            <label for="ProductVariant">{{ 'products.product.variant' | t }}</label>
+            <select class="input" id="ProductVariant" name="id">
+              {%- for variant in product.variants -%}
+                <option
+                  value="{{ variant.id }}"
+                  {% if variant == current_variant %}selected{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                  {{ variant.title | escape }} – {{ variant.price | money }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+        <button type="submit" class="btn btn-solid btn-block" {% unless current_variant.available %}disabled{% endunless %}>
+          {%- if current_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <div class="rte product__description">{{ product.description }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+{%- comment -%}
+  Language switcher (en · tr · es). Shows only when the store has more than
+  one published language (Settings › Languages, translated with Translate & Adapt).
+
+  Accepts:
+  - form_id {String}: unique id, since the header and drawer each render one
+{%- endcomment -%}
+{%- if localization.available_languages.size > 1 -%}
+  <div class="localization">
+    {%- form 'localization', id: form_id -%}
+      <span class="visually-hidden">{{ 'general.language' | t }}</span>
+      {%- for language in localization.available_languages -%}
+        <button
+          type="submit"
+          class="localization__option"
+          name="locale_code"
+          value="{{ language.iso_code }}"
+          lang="{{ language.iso_code }}"
+          title="{{ language.endonym_name | escape }}"
+          {% if language.iso_code == localization.language.iso_code %}
+            aria-current="true"
+          {% endif %}
+        >
+          {{- language.iso_code -}}
+        </button>
+      {%- endfor -%}
+    {%- endform -%}
+  </div>
+{%- endif -%}
