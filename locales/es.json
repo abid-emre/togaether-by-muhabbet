@@ -46,7 +46,8 @@
       "status": {
         "upcoming": "próximo",
         "ongoing": "en curso",
-        "full": "completo"
+        "full": "completo",
+        "past": "pasado"
       },
       "places_left": {
         "zero": "0 plazas libres",
@@ -63,6 +64,26 @@
       },
       "apply": "solicitar esta experiencia",
       "join_waitlist": "unirme a la lista de espera"
+    },
+    "experience": {
+      "back": "volver al calendario",
+      "copy_link": "copiar enlace",
+      "copied": "enlace copiado",
+      "quota": "Plazas",
+      "people": {
+        "one": "1 persona",
+        "other": "{{ count }} personas"
+      },
+      "event_post": "la publicación del evento",
+      "event_post_text": "cartel, programa, anuncio",
+      "photos": "fotos y vídeo",
+      "photos_text": "cómo fue el día",
+      "apply_title": "solicita tu plaza",
+      "waitlist_text": "Este círculo está completo. Déjanos tus datos y te escribiremos si se libera una plaza o hay nueva fecha.",
+      "past_title": "este círculo ya se reunió",
+      "past_text": "Mira cómo fue o encuentra el próximo.",
+      "memory_room": "visita la sala de recuerdos",
+      "see_upcoming": "ver próximas experiencias"
     }
   },
   "products": {
@@ -132,6 +153,7 @@
     "your_words": "tus palabras",
     "testimonial_consent": "Acepto que Togaether comparta mis palabras en su web.",
     "team_message": "cuéntanos sobre tu equipo…",
-    "send": "enviar"
+    "send": "enviar",
+    "message": "¿algo que debamos saber?"
   }
 }

@@ -94,10 +94,34 @@
     });
   }
 
+  // "Copy link" buttons copy the current page URL and briefly confirm.
+  function initCopyLinks() {
+    document.querySelectorAll('[data-copy-link]:not([data-ready])').forEach(function (button) {
+      button.dataset.ready = 'true';
+      button.addEventListener('click', function () {
+        var label = button.querySelector('[data-copy-label]');
+        var original = label ? label.textContent : '';
+        var done = function () {
+          if (!label) return;
+          label.textContent = button.dataset.copiedLabel || original;
+          setTimeout(function () {
+            label.textContent = original;
+          }, 2000);
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(window.location.href).then(done, function () {});
+        } else if (navigator.share) {
+          navigator.share({ url: window.location.href }).catch(function () {});
+        }
+      });
+    });
+  }
+
   function init() {
     initHeader();
     initDrawer();
     initDialogs();
+    initCopyLinks();
   }
 
   document.addEventListener('DOMContentLoaded', initFormStatus);

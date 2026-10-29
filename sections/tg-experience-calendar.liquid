@@ -3,11 +3,10 @@
   Metaobjects), sorts them by start date and splits them into upcoming and past.
   Tabs and city chips filter the cards without a page reload (tg-calendar.js).
 
-  Status: the entry's status field wins, except that an "upcoming" (or empty)
-  entry whose start date has passed is treated as past automatically.
+  Status comes from snippets/tg-experience-status.liquid, so the calendar and
+  the experience page always agree on what counts as past.
 {%- endcomment -%}
 {%- liquid
-  assign today = 'now' | date: '%Y-%m-%d'
   assign upcoming_list = ''
   assign past_list = ''
   assign city_list = ''
@@ -15,18 +14,12 @@
 
 {%- paginate shop.metaobjects.experience.values by 250 -%}
   {%- for entry in shop.metaobjects.experience.values -%}
+    {%- capture status -%}{%- render 'tg-experience-status', entry: entry -%}{%- endcapture -%}
     {%- liquid
-      assign status = entry.status.value | downcase | strip
+      assign status = status | strip
       assign start = entry.start_date.value | date: '%Y-%m-%d'
       if start == blank
         assign start = '9999-12-31'
-      endif
-      if status == blank or status == 'upcoming'
-        if start < today
-          assign status = 'past'
-        else
-          assign status = 'upcoming'
-        endif
       endif
 
       assign key = start | append: '|' | append: entry.system.handle

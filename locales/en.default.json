@@ -46,7 +46,8 @@
       "status": {
         "upcoming": "upcoming",
         "ongoing": "ongoing",
-        "full": "full"
+        "full": "full",
+        "past": "past"
       },
       "places_left": {
         "zero": "0 places left",
@@ -63,6 +64,26 @@
       },
       "apply": "apply for this experience",
       "join_waitlist": "join the waitlist"
+    },
+    "experience": {
+      "back": "back to the calendar",
+      "copy_link": "copy link",
+      "copied": "link copied",
+      "quota": "Quota",
+      "people": {
+        "one": "1 person",
+        "other": "{{ count }} people"
+      },
+      "event_post": "the event post",
+      "event_post_text": "poster, programme, announcement",
+      "photos": "photos & film",
+      "photos_text": "what the day looked like",
+      "apply_title": "apply to join",
+      "waitlist_text": "This circle is full. Leave your details and we'll write if a place opens or a new date is set.",
+      "past_title": "this circle has gathered",
+      "past_text": "Have a look at what it felt like, or find the next one.",
+      "memory_room": "visit the memory room",
+      "see_upcoming": "see upcoming experiences"
     }
   },
   "products": {
@@ -132,6 +153,7 @@
     "your_words": "your words",
     "testimonial_consent": "I'm happy for Togaether to share my words on the website.",
     "team_message": "tell us about your team…",
-    "send": "send"
+    "send": "send",
+    "message": "anything we should know?"
   }
 }

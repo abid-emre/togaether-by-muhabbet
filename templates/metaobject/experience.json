@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "tg-experience-main",
+      "settings": {
+        "calendar_link": "/#calendar",
+        "memory_room_link": "/#memory-room",
+        "default_phone_code": "+90",
+        "show_message": true,
+        "success_message": "Thank you for applying. We'll reply by email within a few days."
+      }
+    }
+  },
+  "order": ["main"]
+}
