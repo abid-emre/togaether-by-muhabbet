@@ -21,7 +21,11 @@
     "header": {
       "menu": "Menú",
       "open_menu": "Abrir menú",
-      "close_menu": "Cerrar menú"
+      "close_menu": "Cerrar menú",
+      "cart": {
+        "one": "Carrito, {{ count }} artículo",
+        "other": "Carrito, {{ count }} artículos"
+      }
     },
     "memory_room": {
       "hint": "pasa el cursor sobre una foto para ver su descripción",
@@ -84,13 +88,25 @@
       "past_text": "Mira cómo fue o encuentra el próximo.",
       "memory_room": "visita la sala de recuerdos",
       "see_upcoming": "ver próximas experiencias"
+    },
+    "shop": {
+      "placeholder_title": "juego de mesa",
+      "placeholder_text": "elige una colección para mostrar tus productos"
     }
   },
   "products": {
     "product": {
       "variant": "Edición",
       "add_to_cart": "Añadir al carrito",
-      "sold_out": "Agotado"
+      "sold_out": "Agotado",
+      "show_image": "Mostrar imagen {{ number }}",
+      "sale_price": "Precio de oferta",
+      "players": "{{ players }} jugadores",
+      "quantity": "Cantidad",
+      "decrease": "Reducir cantidad",
+      "increase": "Aumentar cantidad",
+      "unavailable": "No disponible",
+      "price_from": "desde {{ price }}"
     }
   },
   "templates": {

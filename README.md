@@ -39,6 +39,7 @@ Each can be edited, reordered or hidden in the theme editor.
 | Host (`tg-host`) | `#host` | Portrait and quote, "become a host" pop-up form |
 | Testimonials (`tg-testimonials`) | `#voices` | Reads testimonial entries, "share your experience" pop-up form |
 | Partner logos (`tg-logo-wall`) | `#partners` | Logo grid, muted until hover |
+| Shop row (`tg-shop`) | `#shop` | Products from one collection. Ships hidden: show it at launch |
 | Contact (`tg-contact`) | `#contact` | Newsletter signup and corporate enquiry form |
 
 Forms are Shopify contact forms, so host applications, testimonials and
@@ -63,6 +64,21 @@ Experience), `photo` (image), `consent` (true/false). Turn on the "Publishing"
 option so new entries stay as drafts until approved.
 
 **Host** (`host`): `name`, `role`, `one_line`, `portrait` (image).
+
+## Board game product page
+
+`templates/product.json` uses `main-product` (gallery, edition chips, quantity,
+add to cart, buy it now, collapsible tabs) and `tg-product-experiences`.
+
+- **Editions** are product variants with one option, for example `Edition`:
+  English / Türkçe / Español. Give each variant its own photo to swap the
+  gallery when it's picked.
+- **Product metafields** (Settings › Custom data › Products): `custom.players`,
+  `custom.play_time`, `custom.age` (single line text) and `custom.played_at`
+  (list of Experience entries) for "played at our circles".
+- **Prices in ₺ and €** come from Shopify Markets.
+- **At launch:** show the homepage "Shop row" section and turn on "Show cart
+  icon" in the header.
 
 ## Structure
 

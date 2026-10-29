@@ -435,6 +435,19 @@
         "corporate_button": "start the conversation",
         "corporate_success": "Thank you. We'll reply within a few days."
       }
+    },
+    "shop": {
+      "type": "tg-shop",
+      "disabled": true,
+      "settings": {
+        "kicker": "the shop",
+        "heading": "take the circle home",
+        "intro": "<p>The card games we play at our gatherings, in English, Türkçe and Español.</p>",
+        "limit": 3,
+        "link_label": "see all",
+        "anchor": "shop",
+        "surface": false
+      }
     }
   },
   "order": [
@@ -447,6 +460,7 @@
     "host",
     "testimonials",
     "partners",
+    "shop",
     "contact"
   ]
 }

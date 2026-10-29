@@ -21,7 +21,11 @@
     "header": {
       "menu": "Menü",
       "open_menu": "Menüyü aç",
-      "close_menu": "Menüyü kapat"
+      "close_menu": "Menüyü kapat",
+      "cart": {
+        "one": "Sepet, {{ count }} ürün",
+        "other": "Sepet, {{ count }} ürün"
+      }
     },
     "memory_room": {
       "hint": "açıklama için fotoğrafın üzerine gelin",
@@ -84,13 +88,25 @@
       "past_text": "Nasıl geçtiğine göz atın ya da bir sonrakini bulun.",
       "memory_room": "anı odasını ziyaret et",
       "see_upcoming": "yaklaşan deneyimleri gör"
+    },
+    "shop": {
+      "placeholder_title": "kutu oyunu",
+      "placeholder_text": "ürünlerini göstermek için bir koleksiyon seç"
     }
   },
   "products": {
     "product": {
       "variant": "Baskı",
       "add_to_cart": "Sepete ekle",
-      "sold_out": "Tükendi"
+      "sold_out": "Tükendi",
+      "show_image": "{{ number }}. görseli göster",
+      "sale_price": "İndirimli fiyat",
+      "players": "{{ players }} oyuncu",
+      "quantity": "Adet",
+      "decrease": "Adedi azalt",
+      "increase": "Adedi artır",
+      "unavailable": "Mevcut değil",
+      "price_from": "başlangıç {{ price }}"
     }
   },
   "templates": {

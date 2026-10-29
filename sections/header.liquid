@@ -78,6 +78,16 @@
         </a>
       {%- endif -%}
 
+      {%- if section.settings.show_cart -%}
+        <a class="btn btn-icon header__cart" href="{{ routes.cart_url }}">
+          {% render 'tg-icon', icon: 'bag' %}
+          {%- if cart.item_count > 0 -%}
+            <span class="header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+          {%- endif -%}
+          <span class="visually-hidden">{{ 'sections.header.cart' | t: count: cart.item_count }}</span>
+        </a>
+      {%- endif -%}
+
       <button
         type="button"
         class="btn btn-icon header__menu-toggle"
@@ -183,6 +193,13 @@
       "label": "Show Instagram icon",
       "default": true,
       "info": "Link comes from Theme settings › Social media."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": false,
+      "info": "Turn on when the shop launches."
     }
   ],
   "blocks": [

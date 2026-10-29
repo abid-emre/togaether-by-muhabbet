@@ -2,10 +2,53 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "blocks": {
+        "how_to_play": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "how to play",
+            "content": "<p>Sit in a circle, draw a card and answer it honestly. Others listen without fixing or advising. Pass the deck on when you are done.</p>",
+            "use_description": false
+          }
+        },
+        "inside": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "what's inside",
+            "use_description": true
+          }
+        },
+        "shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "shipping to türkiye & spain",
+            "content": "<p>We ship within Türkiye and Spain. Orders leave our studio within 3 working days.</p>",
+            "use_description": false
+          }
+        }
+      },
+      "block_order": [
+        "how_to_play",
+        "inside",
+        "shipping"
+      ],
+      "settings": {
+        "kicker": "reflection card game",
+        "summary": "<p>The questions we bring to our circles, boxed so you can play them at your own table.</p>",
+        "show_quantity": true,
+        "show_dynamic_checkout": true
+      }
+    },
+    "experiences": {
+      "type": "tg-product-experiences",
+      "settings": {
+        "heading": "played at our circles",
+        "limit": 6
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "experiences"
   ]
 }

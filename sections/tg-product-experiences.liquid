@@ -1,0 +1,50 @@
+{%- comment -%}
+  "Played at our circles" under the board game: the experiences listed in the
+  product metafield custom.played_at (a list of experience entries).
+  Hidden when the product has none.
+{%- endcomment -%}
+{%- assign entries = product.metafields.custom.played_at.value -%}
+{%- if entries != blank -%}
+  <section class="section product-experiences" style="--section-padding: var(--space-8);">
+    <div class="page-width">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="kicker product-experiences__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      <ul class="calendar__past" role="list">
+        {%- for entry in entries limit: section.settings.limit -%}
+          <li>{% render 'tg-experience-card', entry: entry, past: true %}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Played at our circles",
+  "tag": "div",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "played at our circles"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Experiences to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "paragraph",
+      "content": "Pick the experiences on each product in the metafield custom.played_at (list of Experience entries)."
+    }
+  ],
+  "presets": [{ "name": "Played at our circles" }]
+}
+{% endschema %}

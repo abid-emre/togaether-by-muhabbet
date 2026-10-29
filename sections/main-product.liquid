@@ -1,57 +1,314 @@
 {%- comment -%}
-  Basic product page so the theme is complete. The designed board-game page
-  (wireframe 1d) replaces this in a later step.
+  Board game product page (wireframe 1d): photo gallery on the left; kicker,
+  title, price, short text, players / play time / age, edition chips, quantity,
+  add to cart and buy it now on the right, then collapsible tabs.
+
+  Editions are product variants. Players, play time and age come from the
+  product metafields custom.players, custom.play_time and custom.age.
 {%- endcomment -%}
-{%- assign current_variant = product.selected_or_first_available_variant -%}
-<section class="section">
-  <div class="page-width product">
-    <div class="product__media">
-      {%- if product.featured_media -%}
-        {{ product.featured_media | image_url: width: 1200 | image_tag: class: 'plate', loading: 'eager', sizes: '(min-width: 990px) 50vw, 100vw' }}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured = current_variant.featured_media | default: product.featured_media
+  assign kicker = section.settings.kicker | default: product.type
+  assign players = product.metafields.custom.players.value
+  assign play_time = product.metafields.custom.play_time.value
+  assign age = product.metafields.custom.age.value
+  assign form_id = 'ProductForm-' | append: section.id
+-%}
+
+<section class="section product-page">
+  <tg-product
+    class="page-width product"
+    data-section="{{ section.id }}"
+    data-url="{{ product.url }}"
+  >
+    <div class="product__gallery">
+      {%- if featured -%}
+        <div class="product__main-media">
+          {{
+            featured
+            | image_url: width: 1400
+            | image_tag:
+              class: 'product__main-image plate',
+              loading: 'eager',
+              widths: '600, 900, 1200, 1400',
+              sizes: '(min-width: 990px) 55vw, 100vw'
+          }}
+        </div>
+      {%- else -%}
+        <div class="product__main-media product__main-media--empty plate" aria-hidden="true"></div>
+      {%- endif -%}
+
+      {%- if product.media.size > 1 -%}
+        <ul class="product__thumbs" role="list">
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              <li>
+                <button
+                  type="button"
+                  class="product__thumb"
+                  data-media-id="{{ media.id }}"
+                  data-src="{{ media | image_url: width: 1400 }}"
+                  data-srcset="{{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 900 }} 900w, {{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 1400 }} 1400w"
+                  data-alt="{{ media.alt | escape }}"
+                  aria-label="{{ 'products.product.show_image' | t: number: forloop.index }}"
+                  {% if media.id == featured.id %}aria-current="true"{% endif %}
+                >
+                  {{ media | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
       {%- endif -%}
     </div>
 
     <div class="product__info">
-      <h1>{{ product.title | escape }}</h1>
-      <p class="product__price">{{ current_variant.price | money }}</p>
+      {%- if kicker != blank -%}
+        <span class="kicker">{{ kicker | escape }}</span>
+      {%- endif -%}
+      <h1 class="product__title">{{ product.title | escape }}</h1>
 
-      {%- form 'product', product -%}
-        {%- if product.has_only_default_variant -%}
-          <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <p class="product__price" data-price>
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+          {{ current_variant.price | money }}
+          <s class="text-muted">{{ current_variant.compare_at_price | money }}</s>
         {%- else -%}
-          <div class="field">
-            <label for="ProductVariant">{{ 'products.product.variant' | t }}</label>
-            <select class="input" id="ProductVariant" name="id">
-              {%- for variant in product.variants -%}
-                <option
-                  value="{{ variant.id }}"
-                  {% if variant == current_variant %}selected{% endif %}
-                  {% unless variant.available %}disabled{% endunless %}
-                >
-                  {{ variant.title | escape }} – {{ variant.price | money }}
-                </option>
-              {%- endfor -%}
-            </select>
-          </div>
+          {{ current_variant.price | money }}
         {%- endif -%}
-        <button type="submit" class="btn btn-solid btn-block" {% unless current_variant.available %}disabled{% endunless %}>
-          {%- if current_variant.available -%}
-            {{ 'products.product.add_to_cart' | t }}
-          {%- else -%}
-            {{ 'products.product.sold_out' | t }}
+      </p>
+
+      {%- if section.settings.summary != blank -%}
+        <div class="product__summary rte">{{ section.settings.summary }}</div>
+      {%- endif -%}
+
+      {%- if players != blank or play_time != blank or age != blank -%}
+        <ul class="product__facts" role="list">
+          {%- if players != blank -%}
+            <li>{% render 'tg-icon', icon: 'users' %}{{ 'products.product.players' | t: players: players }}</li>
           {%- endif -%}
-        </button>
+          {%- if play_time != blank -%}
+            <li>{% render 'tg-icon', icon: 'clock' %}{{ play_time | escape }}</li>
+          {%- endif -%}
+          {%- if age != blank -%}
+            <li>{% render 'tg-icon', icon: 'people' %}{{ age | escape }}</li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+
+      {%- form 'product', product, id: form_id, class: 'product__form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset class="product__option">
+              <legend class="product__option-label">{{ option.name | escape }}</legend>
+              <div class="product__option-values">
+                {%- for value in option.values -%}
+                  {%- assign input_id = form_id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                  <input
+                    class="product__option-input visually-hidden"
+                    type="radio"
+                    id="{{ input_id }}"
+                    name="option-{{ option.position }}"
+                    value="{{ value | escape }}"
+                    data-option-position="{{ option.position }}"
+                    {% if option.selected_value == value %}checked{% endif %}
+                  >
+                  <label class="chip" for="{{ input_id }}">{{ value | escape }}</label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="product__buy">
+          {%- if section.settings.show_quantity -%}
+            <div class="quantity">
+              <button type="button" class="quantity__button" data-quantity="-1">
+                {% render 'tg-icon', icon: 'minus' %}
+                <span class="visually-hidden">{{ 'products.product.decrease' | t }}</span>
+              </button>
+              <label class="visually-hidden" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+              <input class="quantity__input" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" inputmode="numeric">
+              <button type="button" class="quantity__button" data-quantity="1">
+                {% render 'tg-icon', icon: 'plus' %}
+                <span class="visually-hidden">{{ 'products.product.increase' | t }}</span>
+              </button>
+            </div>
+          {%- endif -%}
+          <button
+            type="submit"
+            name="add"
+            class="btn btn-solid product__add"
+            data-add-button
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            {%- if current_variant.available -%}
+              {{ 'products.product.add_to_cart' | t }}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- endif -%}
+          </button>
+        </div>
+
+        {%- if section.settings.show_dynamic_checkout -%}
+          <div class="product__checkout">{{ form | payment_button }}</div>
+        {%- endif -%}
       {%- endform -%}
 
-      <div class="rte product__description">{{ product.description }}</div>
+      {%- if section.blocks.size > 0 -%}
+        <div class="product__tabs">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'collapsible_tab' -%}
+                {%- liquid
+                  assign tab_content = block.settings.content
+                  if block.settings.use_description
+                    assign tab_content = product.description
+                  endif
+                  if block.settings.page != blank
+                    assign tab_content = block.settings.page.content
+                  endif
+                -%}
+                {%- if block.settings.heading != blank and tab_content != blank -%}
+                  <details class="accordion" {{ block.shopify_attributes }}>
+                    <summary class="accordion__summary">
+                      <span>{{ block.settings.heading | escape }}</span>
+                      {% render 'tg-icon', icon: 'plus', class: 'accordion__icon' %}
+                    </summary>
+                    <div class="accordion__content rte">{{ tab_content }}</div>
+                  </details>
+                {%- endif -%}
+              {%- when 'text' -%}
+                <div class="product__text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
-  </div>
+
+    <script type="application/json" data-variants>
+      {%- capture labels -%}
+        {"add": {{ 'products.product.add_to_cart' | t | json }}, "soldOut": {{ 'products.product.sold_out' | t | json }}, "unavailable": {{ 'products.product.unavailable' | t | json }}}
+      {%- endcapture -%}
+      {%- capture prices -%}
+        {%- for variant in product.variants -%}
+          "{{ variant.id }}": {"price": {{ variant.price | money | json }}, "compare": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %}}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {"variants": {{ product.variants | json }}, "prices": { {{ prices }} }, "labels": {{ labels }}}
+    </script>
+  </tg-product>
 </section>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {%- if product.featured_media -%}
+      "image": [{{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }}],
+    {%- endif -%}
+    "description": {{ product.description | strip_html | json }},
+    "brand": {"@type": "Brand", "name": {{ shop.name | json }}},
+    "offers": [
+      {%- for variant in product.variants -%}
+        {
+          "@type": "Offer",
+          "name": {{ variant.title | json }},
+          {%- if variant.sku != blank -%}"sku": {{ variant.sku | json }},{%- endif -%}
+          "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price": {{ variant.price | divided_by: 100.0 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "url": {{ request.origin | append: variant.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+
+<script src="{{ 'tg-product.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
   "name": "Product",
   "tag": "div",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "reflection card game",
+      "info": "Small line above the title. Leave empty to use the product type."
+    },
+    {
+      "type": "richtext",
+      "id": "summary",
+      "label": "Short text under the price",
+      "info": "One or two lines. The full description goes in a tab below."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show \"buy it now\" button",
+      "default": true,
+      "info": "Shows the fastest checkout option the customer has set up, such as Shop Pay."
+    },
+    {
+      "type": "paragraph",
+      "content": "Editions are product variants (for example English, Türkçe, Español). Players, play time and age come from the product metafields custom.players, custom.play_time and custom.age."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collapsible_tab",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "how to play"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_description",
+          "label": "Use the product description",
+          "default": false
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Or show a page",
+          "info": "Useful for shipping or returns text shared by every product."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

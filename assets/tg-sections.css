@@ -346,3 +346,10 @@ a.past-card:hover .past-card__title { color: var(--color-accent); }
 .experience__apply-header { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
 .experience__apply .btn { align-self: flex-start; }
 .experience__apply .btn-block { align-self: stretch; }
+
+/* ── product page extras ──────────────────────────────────────────────── */
+
+.product-experiences__heading { margin-bottom: var(--space-4); }
+@media (min-width: 990px) { .product-experiences .calendar__past { grid-template-columns: repeat(3, 1fr); } }
+.shop .product-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+@media (min-width: 990px) { .shop .product-grid { grid-template-columns: repeat(3, 1fr); } }

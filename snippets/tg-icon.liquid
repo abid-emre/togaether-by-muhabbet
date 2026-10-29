@@ -5,7 +5,7 @@
   - icon {String}: menu, close, instagram, whatsapp, linkedin, email, arrow-right,
     arrow-up-right, chevron-left, chevron-right, plus, info, clock, sparkle, quote,
     heart, grid, lines, flower, waves, pin, calendar, home, language, tag, users,
-    building, link, people
+    building, link, people, minus, bag
   - class {String}: optional extra classes
 
   Usage:
@@ -46,6 +46,11 @@
       <path d="M9 5l7 7-7 7"/>
     {%- when 'plus' -%}
       <path d="M12 5v14M5 12h14"/>
+    {%- when 'minus' -%}
+      <path d="M5 12h14"/>
+    {%- when 'bag' -%}
+      <path d="M5.5 8.5h13l-1 11.5h-11z"/>
+      <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>
     {%- when 'info' -%}
       <circle cx="12" cy="12" r="8.5"/>
       <path d="M12 11v5.5M12 7.8v.1"/>
