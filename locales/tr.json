@@ -46,7 +46,8 @@
       "status": {
         "upcoming": "yaklaşan",
         "ongoing": "devam ediyor",
-        "full": "dolu"
+        "full": "dolu",
+        "past": "geçmiş"
       },
       "places_left": {
         "zero": "0 yer kaldı",
@@ -63,6 +64,26 @@
       },
       "apply": "bu deneyime başvur",
       "join_waitlist": "bekleme listesine katıl"
+    },
+    "experience": {
+      "back": "takvime dön",
+      "copy_link": "bağlantıyı kopyala",
+      "copied": "bağlantı kopyalandı",
+      "quota": "Kontenjan",
+      "people": {
+        "one": "1 kişi",
+        "other": "{{ count }} kişi"
+      },
+      "event_post": "etkinlik gönderisi",
+      "event_post_text": "afiş, program, duyuru",
+      "photos": "fotoğraflar ve film",
+      "photos_text": "o gün nasıl geçti",
+      "apply_title": "katılmak için başvur",
+      "waitlist_text": "Bu buluşma dolu. Bilgilerinizi bırakın; yer açılırsa ya da yeni tarih belirlenirse size yazalım.",
+      "past_title": "bu buluşma gerçekleşti",
+      "past_text": "Nasıl geçtiğine göz atın ya da bir sonrakini bulun.",
+      "memory_room": "anı odasını ziyaret et",
+      "see_upcoming": "yaklaşan deneyimleri gör"
     }
   },
   "products": {
@@ -132,6 +153,7 @@
     "your_words": "sizin sözleriniz",
     "testimonial_consent": "Sözlerimin Togaether web sitesinde paylaşılmasını kabul ediyorum.",
     "team_message": "bize ekibinizden bahsedin…",
-    "send": "gönder"
+    "send": "gönder",
+    "message": "bilmemiz gereken bir şey var mı?"
   }
 }

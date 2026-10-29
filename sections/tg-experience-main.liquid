@@ -1,0 +1,322 @@
+{%- comment -%}
+  Experience page: one page per "experience" metaobject entry (turn on "Web
+  pages" for the Experience definition). Details, links, host and an apply
+  form. When no places are left the form becomes a waitlist; past experiences
+  show a link to the memory room instead.
+{%- endcomment -%}
+{%- liquid
+  assign entry = metaobject
+  assign title = entry.name.value | default: entry.system.handle
+  assign city_name = entry.city.value.name.value
+  assign location = entry.location.value
+  assign dates = entry.dates_text.value
+  if dates == blank and entry.start_date.value != blank
+    assign dates = entry.start_date.value | date: format: 'abbreviated_date'
+  endif
+  assign seats = entry.seats_left.value
+  assign is_full = false
+  if seats != blank and seats <= 0
+    assign is_full = true
+  endif
+  assign host = entry.host.value
+  assign form_id = 'ExperienceForm-' | append: section.id
+
+  assign experience_label = title
+  if city_name != blank
+    assign experience_label = experience_label | append: ' · ' | append: city_name
+  endif
+  if dates != blank
+    assign experience_label = experience_label | append: ' · ' | append: dates
+  endif
+-%}
+{%- capture status -%}{%- render 'tg-experience-status', entry: entry -%}{%- endcapture -%}
+{%- assign status = status | strip -%}
+
+<section class="section experience">
+  <div class="page-width">
+    <div class="experience__topbar">
+      <a class="btn btn-ghost" href="{{ section.settings.calendar_link | default: '/#calendar' | escape }}">
+        {% render 'tg-icon', icon: 'chevron-left' %}
+        {{ 'sections.experience.back' | t }}
+      </a>
+      <button type="button" class="btn btn-ghost" data-copy-link data-copied-label="{{ 'sections.experience.copied' | t | escape }}">
+        {% render 'tg-icon', icon: 'link' %}
+        <span data-copy-label>{{ 'sections.experience.copy_link' | t }}</span>
+      </button>
+    </div>
+
+    <div class="experience__grid">
+      <div class="experience__main">
+        <span class="tag {% if status == 'past' or is_full %}tag-neutral{% else %}tag-accent{% endif %}">
+          {%- if status == 'past' -%}
+            {{ 'sections.calendar.status.past' | t }}
+          {%- elsif is_full -%}
+            {{ 'sections.calendar.status.full' | t }}
+          {%- elsif status == 'ongoing' -%}
+            {{ 'sections.calendar.status.ongoing' | t }}
+          {%- else -%}
+            {{ 'sections.calendar.status.upcoming' | t }}
+          {%- endif -%}
+        </span>
+        <h1 class="experience__title">{{ title | escape }}</h1>
+
+        <dl class="experience__meta">
+          {%- if city_name != blank or location != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'pin' %}{{ 'sections.calendar.meta.city' | t }}</dt>
+              <dd>
+                {{- city_name | escape -}}
+                {%- if location != blank -%}
+                  {%- if city_name != blank %}, {% endif -%}
+                  {{- location | escape -}}
+                {%- endif -%}
+              </dd>
+            </div>
+          {%- endif -%}
+          {%- if dates != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'calendar' %}{{ 'sections.calendar.meta.date' | t }}</dt>
+              <dd>{{ dates | escape }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if entry.duration.value != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'clock' %}{{ 'sections.calendar.meta.duration' | t }}</dt>
+              <dd>{{ entry.duration.value | escape }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if entry.event_type.value != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'home' %}{{ 'sections.calendar.meta.type' | t }}</dt>
+              <dd>{{ entry.event_type.value | escape }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if entry.language.value != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'language' %}{{ 'sections.calendar.meta.language' | t }}</dt>
+              <dd>{{ entry.language.value | escape }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if entry.quota.value != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'users' %}{{ 'sections.experience.quota' | t }}</dt>
+              <dd>{{ 'sections.experience.people' | t: count: entry.quota.value }}</dd>
+            </div>
+          {%- endif -%}
+          {%- if entry.price.value != blank -%}
+            <div>
+              <dt>{% render 'tg-icon', icon: 'tag' %}{{ 'sections.calendar.meta.price' | t }}</dt>
+              <dd>{{ entry.price.value | escape }}</dd>
+            </div>
+          {%- endif -%}
+        </dl>
+
+        {%- if entry.photo.value != blank -%}
+          {{
+            entry.photo.value
+            | image_url: width: 1600
+            | image_tag:
+              class: 'experience__photo plate',
+              alt: title,
+              loading: 'eager',
+              widths: '600, 900, 1200, 1600',
+              sizes: '(min-width: 990px) 60vw, 100vw'
+          }}
+        {%- endif -%}
+
+        {%- if entry.introduction.value != blank -%}
+          <div class="experience__intro rte">{{ entry.introduction | metafield_tag }}</div>
+        {%- endif -%}
+
+        {%- if entry.instagram_post.value != blank or entry.more_photos.value != blank -%}
+          <ul class="experience__links" role="list">
+            {%- if entry.instagram_post.value != blank -%}
+              <li>
+                <a class="card experience__link" href="{{ entry.instagram_post.value }}" target="_blank" rel="noopener">
+                  <span class="card-title">{{ 'sections.experience.event_post' | t }}</span>
+                  <span class="card-body">{{ 'sections.experience.event_post_text' | t }}</span>
+                  {% render 'tg-icon', icon: 'arrow-up-right', class: 'experience__link-icon' %}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if entry.more_photos.value != blank -%}
+              <li>
+                <a class="card experience__link" href="{{ entry.more_photos.value }}" target="_blank" rel="noopener">
+                  <span class="card-title">{{ 'sections.experience.photos' | t }}</span>
+                  <span class="card-body">{{ 'sections.experience.photos_text' | t }}</span>
+                  {% render 'tg-icon', icon: 'arrow-up-right', class: 'experience__link-icon' %}
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if host != blank -%}
+          <div class="experience__host">
+            {%- if host.portrait.value != blank -%}
+              {{
+                host.portrait.value
+                | image_url: width: 160, height: 160, crop: 'center'
+                | image_tag: class: 'experience__host-portrait', alt: host.name.value, loading: 'lazy'
+              }}
+            {%- endif -%}
+            <p>
+              <strong>{{ host.name.value | escape }}</strong>
+              {%- if host.role.value != blank %} · {{ host.role.value | escape }}{% endif -%}
+              {%- if host.one_line.value != blank -%}
+                <br><span class="text-muted">{{ host.one_line.value | escape }}</span>
+              {%- endif -%}
+            </p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <aside class="experience__aside">
+        <div class="experience__apply card">
+          {%- if status == 'past' -%}
+            <h2 class="h3">{{ 'sections.experience.past_title' | t }}</h2>
+            <p class="card-body">{{ 'sections.experience.past_text' | t }}</p>
+            <a class="btn btn-primary" href="{{ section.settings.memory_room_link | default: '/#memory-room' | escape }}">
+              {{- 'sections.experience.memory_room' | t -}}
+            </a>
+            <a class="btn btn-ghost" href="{{ section.settings.calendar_link | default: '/#calendar' | escape }}">
+              {{- 'sections.experience.see_upcoming' | t -}}
+            </a>
+          {%- else -%}
+            <div class="experience__apply-header">
+              <h2 class="h3">
+                {%- if is_full -%}
+                  {{ 'sections.calendar.join_waitlist' | t }}
+                {%- else -%}
+                  {{ 'sections.experience.apply_title' | t }}
+                {%- endif -%}
+              </h2>
+              {%- if seats != blank -%}
+                <span class="experience-card__seats{% unless is_full %} experience-card__seats--open{% endunless %}">
+                  {{- 'sections.calendar.places_left' | t: count: seats -}}
+                </span>
+              {%- endif -%}
+            </div>
+            {%- if is_full -%}
+              <p class="card-body">{{ 'sections.experience.waitlist_text' | t }}</p>
+            {%- endif -%}
+
+            {%- form 'contact', id: form_id -%}
+              {% render 'tg-form-status', form: form, success: section.settings.success_message %}
+              <input type="hidden" name="contact[form]" value="{% if is_full %}waitlist{% else %}application{% endif %}">
+              <input type="hidden" name="contact[experience]" value="{{ experience_label | escape }}">
+              <div class="field-row">
+                <div class="field">
+                  <label for="{{ form_id }}-first">{{ 'forms.first_name' | t }}</label>
+                  <input class="input" id="{{ form_id }}-first" type="text" name="contact[first_name]" autocomplete="given-name" required>
+                </div>
+                <div class="field">
+                  <label for="{{ form_id }}-last">{{ 'forms.last_name' | t }}</label>
+                  <input class="input" id="{{ form_id }}-last" type="text" name="contact[last_name]" autocomplete="family-name" required>
+                </div>
+              </div>
+              {% render 'tg-phone-field', id: form_id, default_code: section.settings.default_phone_code, required: true %}
+              <div class="field">
+                <label for="{{ form_id }}-email">{{ 'forms.email' | t }}</label>
+                <input class="input" id="{{ form_id }}-email" type="email" name="contact[email]" autocomplete="email" required>
+              </div>
+              {%- if section.settings.show_message -%}
+                <div class="field">
+                  <label for="{{ form_id }}-message">
+                    {{- 'forms.message' | t }} {{ 'forms.optional' | t -}}
+                  </label>
+                  <textarea class="input" id="{{ form_id }}-message" name="contact[body]"></textarea>
+                </div>
+              {%- endif -%}
+              <button type="submit" class="btn btn-solid btn-block">
+                {%- if is_full -%}
+                  {{ 'sections.calendar.join_waitlist' | t }}
+                {%- else -%}
+                  {{ 'sections.calendar.apply' | t }}
+                {%- endif -%}
+              </button>
+            {%- endform -%}
+          {%- endif -%}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": {{ title | json }},
+    {%- if entry.start_date.value != blank %}
+      "startDate": {{ entry.start_date.value | date: '%Y-%m-%d' | json }},
+    {%- endif %}
+    {%- if entry.introduction.value != blank %}
+      "description": {{ entry.introduction.value | strip_html | truncate: 300 | json }},
+    {%- endif %}
+    {%- if entry.photo.value != blank %}
+      "image": {{ entry.photo.value | image_url: width: 1200 | prepend: 'https:' | json }},
+    {%- endif %}
+    "eventStatus": "https://schema.org/EventScheduled",
+    {%- if city_name == 'online' %}
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "location": { "@type": "VirtualLocation", "url": {{ request.origin | append: request.path | json }} },
+    {%- else %}
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": {{ location | default: city_name | default: shop.name | json }},
+        "address": {{ city_name | default: '' | json }}
+      },
+    {%- endif %}
+    "organizer": { "@type": "Organization", "name": {{ shop.name | json }}, "url": {{ request.origin | json }} }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Experience",
+  "tag": "div",
+  "class": "section-experience",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the details of each Experience entry. Edit an entry in Content › Metaobjects › Experience."
+    },
+    {
+      "type": "text",
+      "id": "calendar_link",
+      "label": "Calendar link",
+      "default": "/#calendar"
+    },
+    {
+      "type": "text",
+      "id": "memory_room_link",
+      "label": "Memory room link",
+      "default": "/#memory-room"
+    },
+    {
+      "type": "select",
+      "id": "default_phone_code",
+      "label": "Default country code",
+      "options": [
+        { "value": "+90", "label": "+90 Türkiye" },
+        { "value": "+34", "label": "+34 España" }
+      ],
+      "default": "+90"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_message",
+      "label": "Show optional message field",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Thank-you message",
+      "default": "Thank you for applying. We'll reply by email within a few days."
+    }
+  ]
+}
+{% endschema %}

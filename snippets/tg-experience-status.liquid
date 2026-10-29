@@ -1,0 +1,24 @@
+{%- comment -%}
+  Prints an experience's effective status: upcoming, ongoing or past.
+  The status field wins, except that an "upcoming" (or empty) entry whose start
+  date has passed counts as past, so events move to past on their own.
+
+  Accepts:
+  - entry {Object}: an "experience" metaobject entry
+
+  Usage:
+  {% capture status %}{% render 'tg-experience-status', entry: entry %}{% endcapture %}
+{%- endcomment -%}
+{%- liquid
+  assign today = 'now' | date: '%Y-%m-%d'
+  assign status = entry.status.value | downcase | strip
+  assign start = entry.start_date.value | date: '%Y-%m-%d'
+  if status == blank or status == 'upcoming'
+    if start != blank and start < today
+      assign status = 'past'
+    else
+      assign status = 'upcoming'
+    endif
+  endif
+  echo status
+-%}
