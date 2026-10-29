@@ -21,7 +21,11 @@
     "header": {
       "menu": "Menu",
       "open_menu": "Open menu",
-      "close_menu": "Close menu"
+      "close_menu": "Close menu",
+      "cart": {
+        "one": "Cart, {{ count }} item",
+        "other": "Cart, {{ count }} items"
+      }
     },
     "memory_room": {
       "hint": "hover a photo for its caption",
@@ -84,13 +88,25 @@
       "past_text": "Have a look at what it felt like, or find the next one.",
       "memory_room": "visit the memory room",
       "see_upcoming": "see upcoming experiences"
+    },
+    "shop": {
+      "placeholder_title": "board game",
+      "placeholder_text": "pick a collection to show your products"
     }
   },
   "products": {
     "product": {
       "variant": "Edition",
       "add_to_cart": "Add to cart",
-      "sold_out": "Sold out"
+      "sold_out": "Sold out",
+      "show_image": "Show image {{ number }}",
+      "sale_price": "Sale price",
+      "players": "{{ players }} players",
+      "quantity": "Quantity",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "unavailable": "Unavailable",
+      "price_from": "from {{ price }}"
     }
   },
   "templates": {

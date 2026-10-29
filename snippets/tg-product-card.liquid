@@ -4,8 +4,29 @@
 {%- endcomment -%}
 <a class="card product-card" href="{{ product.url }}">
   {%- if product.featured_media -%}
-    {{ product.featured_media | image_url: width: 600 | image_tag: class: 'plate', loading: 'lazy', sizes: '(min-width: 750px) 33vw, 50vw' }}
+    {{
+      product.featured_media
+      | image_url: width: 600
+      | image_tag:
+        class: 'product-card__image plate',
+        loading: 'lazy',
+        widths: '300, 450, 600',
+        sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw'
+    }}
+  {%- else -%}
+    <span class="product-card__placeholder plate" aria-hidden="true"></span>
+  {%- endif -%}
+  {%- if product.type != blank -%}
+    <span class="card-kicker">{{ product.type | escape }}</span>
   {%- endif -%}
   <span class="card-title">{{ product.title | escape }}</span>
-  <span class="card-meta">{{ product.price | money }}</span>
+  <span class="card-meta">
+    {%- if product.price_varies -%}
+      {%- assign price_min = product.price_min | money -%}
+      {{ 'products.product.price_from' | t: price: price_min }}
+    {%- else -%}
+      {{ product.price | money }}
+    {%- endif -%}
+    {%- unless product.available %} · {{ 'products.product.sold_out' | t }}{% endunless -%}
+  </span>
 </a>
