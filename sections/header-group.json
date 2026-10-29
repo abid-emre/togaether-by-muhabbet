@@ -1,0 +1,31 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "apply": {
+          "type": "apply_button",
+          "settings": {
+            "label": "apply to join",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "apply"
+      ],
+      "settings": {
+        "menu": "main-menu",
+        "sticky": true,
+        "show_languages": true,
+        "show_instagram": true,
+        "logo_height": 40
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

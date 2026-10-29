@@ -1,0 +1,26 @@
+{%- layout none -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ 'templates.gift_card.title' | t }} – {{ shop.name }}</title>
+    {{ content_for_header }}
+    {% render 'tg-css-variables' %}
+    {{ 'tg-theme.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body>
+    <main class="password-page">
+      <div class="password-page__inner">
+        <span class="kicker">{{ shop.name }}</span>
+        <h1>{{ 'templates.gift_card.title' | t }}</h1>
+        <p class="display">{{ gift_card.balance | money }}</p>
+        <p><code>{{ gift_card.code | format_code }}</code></p>
+        {%- if gift_card.expired -%}
+          <p class="text-muted">{{ 'templates.gift_card.expired' | t }}</p>
+        {%- endif -%}
+        <a class="btn btn-primary" href="{{ shop.url }}">{{ 'general.back_home' | t }}</a>
+      </div>
+    </main>
+  </body>
+</html>

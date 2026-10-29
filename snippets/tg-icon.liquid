@@ -1,0 +1,41 @@
+{%- comment -%}
+  Renders an inline SVG icon.
+
+  Accepts:
+  - icon {String}: menu, close, instagram, whatsapp, linkedin, email, arrow-right, arrow-up-right
+  - class {String}: optional extra classes
+
+  Usage:
+  {% render 'tg-icon', icon: 'instagram' %}
+{%- endcomment -%}
+{%- liquid
+  assign classes = 'icon icon-' | append: icon
+  if class != blank
+    assign classes = classes | append: ' ' | append: class
+  endif
+-%}
+<svg class="{{ classes }}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  {%- case icon -%}
+    {%- when 'menu' -%}
+      <path d="M4 7h16M4 12h16M4 17h16"/>
+    {%- when 'close' -%}
+      <path d="M6 6l12 12M18 6L6 18"/>
+    {%- when 'instagram' -%}
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/>
+    {%- when 'whatsapp' -%}
+      <path d="M4 20l1.2-3.9A8 8 0 1 1 8 18.9L4 20z"/>
+      <path d="M9.2 8.6c.2-.4.5-.5.8-.5h.4c.2 0 .3.1.4.3l.6 1.4c.1.2 0 .4-.1.5l-.4.5c-.1.1-.1.3 0 .4.6 1 1.4 1.8 2.4 2.3.2.1.3.1.4 0l.5-.5c.1-.1.3-.2.5-.1l1.4.6c.2.1.3.2.3.4v.4c0 .3-.2.6-.5.8-.5.3-1.2.4-1.9.2-2.3-.7-4.1-2.5-4.8-4.8-.2-.7-.1-1.4.2-1.9z" fill="currentColor" stroke="none"/>
+    {%- when 'linkedin' -%}
+      <rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/>
+      <path d="M8 10.5V16M8 7.8v.1M11.5 16v-5.5M11.5 13c0-1.5 1-2.6 2.4-2.6s2.1 1 2.1 2.6V16"/>
+    {%- when 'email' -%}
+      <rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/>
+      <path d="M4 7l8 6 8-6"/>
+    {%- when 'arrow-right' -%}
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    {%- when 'arrow-up-right' -%}
+      <path d="M7 17L17 7M8 7h9v9"/>
+  {%- endcase -%}
+</svg>

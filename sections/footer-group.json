@@ -1,0 +1,44 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "on this page",
+            "menu": "footer"
+          }
+        },
+        "gather": {
+          "type": "text",
+          "settings": {
+            "heading": "where we gather",
+            "text": "<p>türkiye · spain</p><p>barcelona · istanbul · izmir</p>"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "heading": "follow",
+            "whatsapp_label": "whatsapp community"
+          }
+        }
+      },
+      "block_order": [
+        "menu",
+        "gather",
+        "social"
+      ],
+      "settings": {
+        "tagline": "come as you are. leave connected.",
+        "show_policies": true
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

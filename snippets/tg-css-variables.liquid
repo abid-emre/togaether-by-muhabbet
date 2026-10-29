@@ -1,0 +1,85 @@
+{%- comment -%}
+  Design tokens from the Classical design system. Colours come from
+  theme settings; the tonal ramps are mixed from them so they follow any change.
+  Fonts are self-hosted (SIL Open Font License) so they match the designs exactly.
+{%- endcomment -%}
+<style>
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('{{ 'cormorant-garamond-latin-ext.woff2' | asset_url }}') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('{{ 'cormorant-garamond-latin.woff2' | asset_url }}') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  @font-face {
+    font-family: 'Lora';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('{{ 'lora-latin-ext.woff2' | asset_url }}') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Lora';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('{{ 'lora-latin.woff2' | asset_url }}') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  :root {
+    --color-bg: {{ settings.color_background }};
+    --color-surface: {{ settings.color_surface }};
+    --color-text: {{ settings.color_text }};
+    --color-accent: {{ settings.color_accent }};
+    --color-accent-2: {{ settings.color_accent_2 }};
+    --color-divider: color-mix(in srgb, var(--color-text) 16%, transparent);
+    --color-muted: color-mix(in srgb, var(--color-text) 55%, transparent);
+
+    --color-neutral-100: color-mix(in srgb, var(--color-text) 3%, white);
+    --color-neutral-800: color-mix(in srgb, var(--color-text) 80%, white);
+    --color-neutral-900: color-mix(in srgb, var(--color-text) 92%, white);
+    --color-accent-100: color-mix(in srgb, var(--color-accent) 12%, white);
+    --color-accent-700: color-mix(in srgb, var(--color-accent) 70%, black);
+    --color-accent-800: color-mix(in srgb, var(--color-accent) 50%, black);
+
+    --font-heading: 'Cormorant Garamond', Georgia, serif;
+    --font-heading-weight: 600;
+    --font-display-weight: 400;
+    --font-body: 'Lora', Georgia, serif;
+    --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+    --font-heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+
+    --space-1: 4.6px;
+    --space-2: 9.2px;
+    --space-3: 13.8px;
+    --space-4: 18.4px;
+    --space-6: 27.6px;
+    --space-8: 36.8px;
+    --space-12: 55.2px;
+    --space-16: 73.6px;
+
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 7px;
+
+    --shadow-sm: 0 1px 2px color-mix(in srgb, var(--color-neutral-900) 14%, transparent);
+    --shadow-md: 0 3px 10px color-mix(in srgb, var(--color-neutral-900) 16%, transparent);
+    --shadow-lg: 0 12px 32px color-mix(in srgb, var(--color-neutral-900) 22%, transparent);
+
+    --page-width: {{ settings.page_width }}px;
+    --page-gutter: clamp(16px, 4vw, 44px);
+    --header-height: 72px;
+    --photo-filter: {% if settings.photo_treatment %}sepia(0.22) saturate(0.82) contrast(1.05){% else %}none{% endif %};
+  }
+</style>

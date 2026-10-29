@@ -1,0 +1,40 @@
+<section class="section">
+  <div class="page-width page-width--narrow">
+    <h1 class="main-page__title">{{ 'templates.cart.title' | t }}</h1>
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" class="cart">
+        <ul class="cart__items" role="list">
+          {%- for item in cart.items -%}
+            <li class="cart__item">
+              <a href="{{ item.url }}" class="card-title">{{ item.product.title | escape }}</a>
+              {%- unless item.product.has_only_default_variant -%}
+                <span class="card-meta">{{ item.variant.title | escape }}</span>
+              {%- endunless -%}
+              <label class="visually-hidden" for="Quantity-{{ forloop.index }}">{{ 'templates.cart.quantity' | t }}</label>
+              <input class="input cart__qty" id="Quantity-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+              <span>{{ item.final_line_price | money }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <p class="cart__total">{{ 'templates.cart.subtotal' | t }}: {{ cart.total_price | money_with_currency }}</p>
+        <div class="cart__actions">
+          <button type="submit" name="update" class="btn btn-secondary">{{ 'templates.cart.update' | t }}</button>
+          <button type="submit" name="checkout" class="btn btn-solid">{{ 'templates.cart.checkout' | t }}</button>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="empty-state">
+        <p class="text-muted">{{ 'templates.cart.empty' | t }}</p>
+        <a class="btn btn-primary" href="{{ routes.root_url }}">{{ 'general.back_home' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

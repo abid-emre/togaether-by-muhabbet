@@ -1,0 +1,34 @@
+<section class="section">
+  <div class="page-width page-width--narrow">
+    <h1 class="main-page__title">{{ 'templates.search.title' | t }}</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="password-page__form">
+      <label class="visually-hidden" for="SearchInput">{{ 'templates.search.title' | t }}</label>
+      <input class="input" id="SearchInput" type="search" name="q" value="{{ search.terms | escape }}">
+      <button type="submit" class="btn btn-primary">{{ 'templates.search.submit' | t }}</button>
+    </form>
+
+    {%- if search.performed -%}
+      <p class="text-muted search-results__count">
+        {{ 'templates.search.results_count' | t: count: search.results_count, terms: search.terms }}
+      </p>
+      <ul class="search-results" role="list">
+        {%- for item in search.results -%}
+          <li class="card">
+            <a class="card-title" href="{{ item.url }}">{{ item.title | escape }}</a>
+            {%- if item.content != blank -%}
+              <p class="card-body">{{ item.content | strip_html | truncatewords: 30 }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

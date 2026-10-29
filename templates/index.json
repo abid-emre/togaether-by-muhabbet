@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "intro": {
+      "type": "tg-rich-text",
+      "settings": {
+        "kicker": "togaether by muhabbet",
+        "heading": "come as you are. leave connected.",
+        "display_heading": true,
+        "text": "<p>Our new home is on its way.</p>",
+        "alignment": "center",
+        "surface": false
+      }
+    }
+  },
+  "order": [
+    "intro"
+  ]
+}
