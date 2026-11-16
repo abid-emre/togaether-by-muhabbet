@@ -33,7 +33,14 @@
             preload: true
         }}
       {%- else -%}
-        <span class="header__logo-text">{{ shop.name }}</span>
+        {%- assign logo_width = section.settings.logo_height | times: 3.646 | round -%}
+        <img
+          src="{{ 'togaether-by-muhabbet.svg' | asset_url }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ logo_width }}"
+          height="{{ section.settings.logo_height }}"
+          style="width: {{ logo_width }}px; height: {{ section.settings.logo_height }}px; max-height: none; max-width: none;"
+        >
       {%- endif -%}
     </a>
     {%- if request.page_type == 'index' -%}
@@ -70,7 +77,7 @@
 
       {%- if apply_block and apply_block.settings.label != blank -%}
         <a
-          class="btn btn-primary"
+          class="btn btn-solid header__apply"
           href="{{ apply_block.settings.link | default: '#' | escape }}"
           {{ apply_block.shopify_attributes }}
         >
@@ -155,7 +162,7 @@
       "type": "image_picker",
       "id": "logo",
       "label": "Logo",
-      "info": "Leave empty to show the store name in the heading font."
+      "info": "Leave empty to use the togaether by muhabbet logo that comes with the theme."
     },
     {
       "type": "range",

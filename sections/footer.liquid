@@ -10,7 +10,7 @@
           {%- if section.settings.logo != blank -%}
             {{ section.settings.logo | image_url: height: 112 | image_tag: alt: shop.name, loading: 'lazy' }}
           {%- else -%}
-            <span class="header__logo-text">{{ shop.name }}</span>
+            <img src="{{ 'togaether-by-muhabbet.svg' | asset_url }}" alt="{{ shop.name | escape }}" width="204" height="56" style="width: 204px; height: 56px; max-width: none;" loading="lazy">
           {%- endif -%}
         </a>
         {%- if section.settings.tagline != blank -%}
@@ -108,7 +108,7 @@
       "type": "image_picker",
       "id": "logo",
       "label": "Logo",
-      "info": "Leave empty to show the store name."
+      "info": "Leave empty to use the togaether by muhabbet logo that comes with the theme."
     },
     {
       "type": "text",

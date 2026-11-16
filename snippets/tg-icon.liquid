@@ -5,7 +5,8 @@
   - icon {String}: menu, close, instagram, whatsapp, linkedin, email, arrow-right,
     arrow-up-right, chevron-left, chevron-right, plus, info, clock, sparkle, quote,
     heart, grid, lines, flower, waves, pin, calendar, home, language, tag, users,
-    building, link, people, minus, bag
+    building, link, people, minus, bag, camera, compass, chart, help, message,
+    user
   - class {String}: optional extra classes
 
   Usage:
@@ -106,5 +107,21 @@
       <path d="M9 7.5h1.5M13.5 7.5H15M9 11h1.5M13.5 11H15M9 14.5h1.5M13.5 14.5H15M10.5 20.5v-3h3v3"/>
     {%- when 'link' -%}
       <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>
+    {%- when 'camera' -%}
+      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/>
+      <circle cx="12" cy="13" r="3"/>
+    {%- when 'compass' -%}
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/>
+    {%- when 'chart' -%}
+      <path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/>
+    {%- when 'help' -%}
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>
+    {%- when 'message' -%}
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/>
+    {%- when 'user' -%}
+      <circle cx="12" cy="7" r="4"/>
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
   {%- endcase -%}
 </svg>
