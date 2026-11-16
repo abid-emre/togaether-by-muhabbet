@@ -8,7 +8,7 @@
   <div class="page-width">
     <div class="section-heading">
       {%- if section.settings.kicker != blank -%}
-        <span class="kicker">{{ section.settings.kicker | escape }}</span>
+        <span class="kicker">{%- render 'tg-icon', icon: 'building' -%}{{ section.settings.kicker | escape }}</span>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
         <h2 class="h1">{{ section.settings.heading | escape }}</h2>

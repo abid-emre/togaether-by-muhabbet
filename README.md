@@ -1,7 +1,7 @@
 # Togaether by Muhabbet — Shopify theme
 
 A custom Online Store 2.0 theme for Togaether, built from scratch from the
-"Togaether Shopify Wireframes" (Claude Design) and the Classical design system.
+"Togaether Shopify Wireframes" (Claude Design) and the togaether brand book.
 
 ## Connect to Shopify
 
@@ -87,7 +87,7 @@ add to cart, buy it now, collapsible tabs) and `tg-product-experiences`.
 | `layout/` | `theme.liquid` (site shell) and `password.liquid` (opening-soon page) |
 | `sections/` | Header and footer (in section groups), page templates, `tg-*` custom sections |
 | `snippets/` | Design tokens (`tg-css-variables`), icons, language switcher, meta tags |
-| `assets/` | `tg-theme.css`, `tg-theme.js`, self-hosted Cormorant Garamond and Lora |
+| `assets/` | `tg-theme.css`, `tg-theme.js`, self-hosted brand fonts, logo and chevron icon (SVG) |
 | `config/` | Theme settings (colours, type scale, page width, social links) |
 | `locales/` | Storefront text in English, Turkish and Spanish |
 
@@ -102,6 +102,35 @@ before opening a pull request:
 shopify theme check
 ```
 
-## Fonts
+## Brand
 
-Cormorant Garamond and Lora are licensed under the SIL Open Font License 1.1.
+Colours, fonts and logo follow the togaether brand book (Nov 2026).
+
+| Role | Value |
+| --- | --- |
+| Background (cream) | `#EFEBE0` |
+| Text (ink) | `#262121` |
+| Accent (terracotta) | `#BB6847`: icons, rules, numbers |
+| Deep accent (plum brown) | `#573232`: buttons, links, sub-headers |
+| Second accent (olive) | `#999E67` |
+
+All five are in **Theme settings › Colors**.
+
+**Logo and favicon.** `assets/togaether-by-muhabbet.svg` shows in the header,
+footer and password page until a logo is uploaded in the header or footer
+section. `-on-dark` is the cream version for dark grounds. The chevron
+(`assets/togaether-icon.svg`) is the favicon unless one is set in Theme
+settings › Favicon.
+
+**Fonts.**
+
+- Headings: **Visore**. It is a licensed font, so it isn't in the repo. Upload
+  its `.woff2` file in **Content › Files**, copy the link and paste it into
+  **Theme settings › Typography › Visore font file link**. Until then headings
+  use Outfit, a close free stand-in.
+- Sub-headers (section kickers, footer headings, signatures): **Caveat**.
+- Body: **DM Sans**.
+- Italic accents (calendar title, approach principles): **Fraunces** italic.
+
+DM Sans, Caveat, Fraunces and Outfit are self-hosted and licensed under the SIL
+Open Font License 1.1.

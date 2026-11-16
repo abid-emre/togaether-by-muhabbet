@@ -1,10 +1,10 @@
 {
   "current": {
-    "color_background": "#f3f2f2",
-    "color_surface": "#eae9e9",
-    "color_text": "#201f1d",
-    "color_accent": "#b68235",
-    "color_accent_2": "#ac803e",
+    "color_background": "#efebe0",
+    "color_surface": "#e5dfd0",
+    "color_text": "#262121",
+    "color_accent": "#bb6847",
+    "color_accent_2": "#999e67",
     "heading_scale": 100,
     "body_scale": 100,
     "page_width": 1240,
@@ -12,7 +12,8 @@
     "social_instagram_link": "https://www.instagram.com/togaether_by_muhabbet/",
     "social_whatsapp_link": "",
     "social_linkedin_link": "",
-    "contact_email": ""
+    "contact_email": "",
+    "color_brand": "#573232"
   },
   "presets": {
     "Default": {}

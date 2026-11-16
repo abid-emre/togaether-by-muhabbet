@@ -12,38 +12,50 @@
     "settings": [
       {
         "type": "header",
-        "content": "Classical palette"
+        "content": "Brand palette"
+      },
+      {
+        "type": "paragraph",
+        "content": "From the togaether brand book: cream #EFEBE0, ink #262121, terracotta #BB6847, plum brown #573232, olive #999E67."
       },
       {
         "type": "color",
         "id": "color_background",
-        "label": "Background",
-        "default": "#f3f2f2"
+        "label": "Background (cream)",
+        "default": "#efebe0"
       },
       {
         "type": "color",
         "id": "color_surface",
         "label": "Surface",
-        "default": "#eae9e9",
-        "info": "Used for bands, the footer and photo frames."
+        "default": "#e5dfd0",
+        "info": "A deeper cream for bands, the footer and photo frames."
       },
       {
         "type": "color",
         "id": "color_text",
-        "label": "Text",
-        "default": "#201f1d"
+        "label": "Text (ink)",
+        "default": "#262121"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accent",
-        "default": "#b68235"
+        "label": "Accent (terracotta)",
+        "default": "#bb6847",
+        "info": "Icons, rules, numbers and highlights."
+      },
+      {
+        "type": "color",
+        "id": "color_brand",
+        "label": "Deep accent (plum brown)",
+        "default": "#573232",
+        "info": "Main buttons, links and sub-headers."
       },
       {
         "type": "color",
         "id": "color_accent_2",
-        "label": "Second accent",
-        "default": "#ac803e"
+        "label": "Second accent (olive)",
+        "default": "#999e67"
       }
     ]
   },
@@ -52,7 +64,13 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Headings use Cormorant Garamond and body text uses Lora, both included with the theme."
+        "content": "Headings use Visore, sub-headers Caveat, body text DM Sans and italic accents Fraunces. Caveat, DM Sans and Fraunces are included. Visore is a licensed font: upload its .woff2 file in Content › Files and paste the file's link below. Until then headings use Outfit, a close free stand-in."
+      },
+      {
+        "type": "text",
+        "id": "visore_font_url",
+        "label": "Visore font file link (.woff2)",
+        "info": "e.g. https://cdn.shopify.com/s/files/…/Visore-Regular.woff2"
       },
       {
         "type": "range",
@@ -132,7 +150,7 @@
         "type": "image_picker",
         "id": "favicon",
         "label": "Favicon image",
-        "info": "Shown at 32 × 32px."
+        "info": "Shown at 32 × 32px. Leave empty to use the togaether chevron icon."
       }
     ]
   }
