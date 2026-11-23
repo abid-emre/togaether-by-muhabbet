@@ -376,6 +376,7 @@ body.has-open-drawer { overflow: hidden; }
 .product__buy { display: flex; gap: var(--space-2); }
 .product__add { flex: 1; }
 .product__add:disabled { opacity: 0.5; cursor: not-allowed; }
+.product__external-note { margin-top: var(--space-2); font-size: 14px; }
 .product__checkout { margin-top: var(--space-2); }
 .product__checkout .shopify-payment-button__button { border-radius: var(--radius-md); font-family: var(--font-heading); min-height: 44px; }
 .product__checkout .shopify-payment-button__button--unbranded { color: var(--color-accent-700); background: transparent; border: 1px solid var(--color-accent-700); }

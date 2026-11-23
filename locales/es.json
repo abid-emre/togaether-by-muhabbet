@@ -106,7 +106,8 @@
       "decrease": "Reducir cantidad",
       "increase": "Aumentar cantidad",
       "unavailable": "No disponible",
-      "price_from": "desde {{ price }}"
+      "price_from": "desde {{ price }}",
+      "opens_new_window": "(abre Youwa en una ventana nueva)"
     }
   },
   "templates": {

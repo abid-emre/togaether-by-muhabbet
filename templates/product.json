@@ -21,8 +21,8 @@
         "shipping": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "shipping to türkiye & spain",
-            "content": "<p>We ship within Türkiye and Spain. Orders leave our studio within 3 working days.</p>",
+            "heading": "shipping & delivery",
+            "content": "<p>Orders are placed, shipped and delivered by Youwa, our sister brand. You'll find delivery times and costs on the Youwa product page.</p>",
             "use_description": false
           }
         }
@@ -36,7 +36,11 @@
         "kicker": "",
         "summary": "",
         "show_quantity": true,
-        "show_dynamic_checkout": true
+        "show_dynamic_checkout": true,
+        "buy_mode": "external",
+        "external_label": "shop on Youwa",
+        "external_fallback_url": "https://www.youwa.co/collections/urunler",
+        "external_note": "<p>Our products are sold and shipped by our sister brand Youwa.</p>"
       }
     },
     "experiences": {

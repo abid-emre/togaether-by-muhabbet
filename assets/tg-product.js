@@ -43,7 +43,7 @@ if (!customElements.get('tg-product')) {
         this.updateButton(variant);
         if (!variant) return;
 
-        this.idInput.value = variant.id;
+        if (this.idInput) this.idInput.value = variant.id;
         this.updatePrice(variant);
         if (variant.featured_media) {
           const thumb = this.thumbs.find((t) => t.dataset.mediaId === String(variant.featured_media.id));

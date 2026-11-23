@@ -79,6 +79,12 @@ add to cart, buy it now, collapsible tabs) and `tg-product-experiences`.
 - **Prices in ₺ and €** come from Shopify Markets.
 - **At launch:** show the homepage "Shop row" section and turn on "Show cart
   icon" in the header.
+- **Where to buy.** The products are sold on the sister store, Youwa, so by
+  default the product page shows a **shop on Youwa** button instead of
+  quantity, add to cart and buy it now. It opens the product's
+  `custom.youwa_url` metafield (type URL) in a new tab, or the section's
+  fallback link (the Youwa shop page) when a product has none. Switch "Where to
+  buy" in the Product section back to "In this store" to sell here again.
 - **Per-product text.** The same template serves every product, so text that
   differs per product lives on the product: `custom.summary` (rich text, the
   line under the price) and `custom.how_to_play` (rich text, the "how to use
@@ -91,7 +97,9 @@ add to cart, buy it now, collapsible tabs) and `tg-product-experiences`.
 (youwa.co/collections/urunler) in Shopify's product CSV format: titles, clean
 ASCII handles, types, SKUs, prices in ₺, the bundle's compare-at price and every
 photo, linked from Youwa's CDN so Shopify copies them on import. Import it in
-**Products › Import**. Products arrive as **drafts**, vendor `Youwa`, tagged
+**Products › Import**. First create the product metafield definition
+**Youwa link** (`custom.youwa_url`, type URL) in Settings › Custom data ›
+Products, so the file's Youwa link column fills it. Products arrive as **drafts**, vendor `Youwa`, tagged
 `youwa`; check them, then set them active and add them to the collection the
 homepage Shop row reads.
 

@@ -11,6 +11,11 @@
   price reads custom.summary first, and a collapsible tab can read any product
   metafield (for example custom.how_to_play). A tab with nothing to show is
   hidden.
+
+  "Where to buy" decides the buy area. "On another store" swaps quantity, add
+  to cart and buy it now for one link button that opens the product on the
+  sister store (Youwa). The link is the product's custom.youwa_url metafield,
+  or the fallback link in the section settings.
 {%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -24,6 +29,11 @@
     assign summary = section.settings.summary
   endif
   assign form_id = 'ProductForm-' | append: section.id
+  assign sell_external = false
+  if section.settings.buy_mode == 'external'
+    assign sell_external = true
+    assign external_url = product.metafields.custom.youwa_url.value | default: section.settings.external_fallback_url
+  endif
 -%}
 
 <section class="section product-page">
@@ -107,9 +117,7 @@
         </ul>
       {%- endif -%}
 
-      {%- form 'product', product, id: form_id, class: 'product__form', novalidate: 'novalidate' -%}
-        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
-
+      {%- capture option_picker -%}
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
             <fieldset class="product__option">
@@ -132,6 +140,34 @@
             </fieldset>
           {%- endfor -%}
         {%- endunless -%}
+      {%- endcapture -%}
+
+      {%- if sell_external -%}
+        <div class="product__form">
+          {{ option_picker }}
+          {%- if external_url != blank -%}
+            <div class="product__buy">
+              <a
+                class="btn btn-solid product__add product__external"
+                href="{{ external_url }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {{- section.settings.external_label | default: 'shop on Youwa' | escape -}}
+                {%- render 'tg-icon', icon: 'arrow-up-right' -%}
+                <span class="visually-hidden">{{ 'products.product.opens_new_window' | t }}</span>
+              </a>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.external_note != blank -%}
+            <div class="product__external-note rte text-muted">{{ section.settings.external_note }}</div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+      {%- form 'product', product, id: form_id, class: 'product__form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+        {{ option_picker }}
 
         <div class="product__buy">
           {%- if section.settings.show_quantity -%}
@@ -167,6 +203,7 @@
           <div class="product__checkout">{{ form | payment_button }}</div>
         {%- endif -%}
       {%- endform -%}
+      {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
         <div class="product__tabs">
@@ -244,7 +281,7 @@
           "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
           "price": {{ variant.price | divided_by: 100.0 | json }},
           "priceCurrency": {{ cart.currency.iso_code | json }},
-          "url": {{ request.origin | append: variant.url | json }}
+          "url": {% if sell_external and external_url != blank %}{{ external_url | json }}{% else %}{{ request.origin | append: variant.url | json }}{% endif %}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
@@ -269,6 +306,42 @@
       "id": "summary",
       "label": "Short text under the price",
       "info": "Fallback for products without a custom.summary metafield. One or two lines; the full description goes in a tab below."
+    },
+    {
+      "type": "header",
+      "content": "Where to buy"
+    },
+    {
+      "type": "select",
+      "id": "buy_mode",
+      "label": "Where to buy",
+      "options": [
+        { "value": "store", "label": "In this store (add to cart)" },
+        { "value": "external", "label": "On another store (link button)" }
+      ],
+      "default": "external"
+    },
+    {
+      "type": "text",
+      "id": "external_label",
+      "label": "Link button text",
+      "default": "shop on Youwa"
+    },
+    {
+      "type": "url",
+      "id": "external_fallback_url",
+      "label": "Fallback link",
+      "info": "Used when a product has no custom.youwa_url metafield, for example the Youwa shop page."
+    },
+    {
+      "type": "richtext",
+      "id": "external_note",
+      "label": "Note under the button",
+      "default": "<p>Our products are sold and shipped by our sister brand Youwa.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Add to cart"
     },
     {
       "type": "checkbox",
