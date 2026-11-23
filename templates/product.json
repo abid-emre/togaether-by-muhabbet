@@ -6,15 +6,15 @@
         "how_to_play": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "how to play",
-            "content": "<p>Sit in a circle, draw a card and answer it honestly. Others listen without fixing or advising. Pass the deck on when you are done.</p>",
-            "use_description": false
+            "heading": "how to use it",
+            "metafield": "custom.how_to_play",
+            "metafield_only": true
           }
         },
         "inside": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "what's inside",
+            "heading": "about",
             "use_description": true
           }
         },
@@ -33,8 +33,8 @@
         "shipping"
       ],
       "settings": {
-        "kicker": "reflection card game",
-        "summary": "<p>The questions we bring to our circles, boxed so you can play them at your own table.</p>",
+        "kicker": "",
+        "summary": "",
         "show_quantity": true,
         "show_dynamic_checkout": true
       }

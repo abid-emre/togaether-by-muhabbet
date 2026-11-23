@@ -79,6 +79,27 @@ add to cart, buy it now, collapsible tabs) and `tg-product-experiences`.
 - **Prices in ₺ and €** come from Shopify Markets.
 - **At launch:** show the homepage "Shop row" section and turn on "Show cart
   icon" in the header.
+- **Per-product text.** The same template serves every product, so text that
+  differs per product lives on the product: `custom.summary` (rich text, the
+  line under the price) and `custom.how_to_play` (rich text, the "how to use
+  it" tab, hidden when empty). The full description shows in the "about" tab.
+  The kicker above the title is the product **type**.
+
+## Youwa products
+
+`docs/youwa-products-import.csv` holds the six products from the sister store
+(youwa.co/collections/urunler) in Shopify's product CSV format: titles, clean
+ASCII handles, types, SKUs, prices in ₺, the bundle's compare-at price and every
+photo, linked from Youwa's CDN so Shopify copies them on import. Import it in
+**Products › Import**. Products arrive as **drafts**, vendor `Youwa`, tagged
+`youwa`; check them, then set them active and add them to the collection the
+homepage Shop row reads.
+
+The descriptions are short Turkish drafts written from the Youwa pages, not
+copies of them. For the exact original text, either paste it in after import or
+export the products from the Youwa admin (Products › Export) and import that
+file instead. Inventory isn't tracked quantity-wise in the file; set stock
+after import.
 
 ## Structure
 

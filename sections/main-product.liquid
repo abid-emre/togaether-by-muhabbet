@@ -5,6 +5,12 @@
 
   Editions are product variants. Players, play time and age come from the
   product metafields custom.players, custom.play_time and custom.age.
+
+  One template serves every product (card games, journals, gift sets), so the
+  per-product text comes from the product itself: the short text under the
+  price reads custom.summary first, and a collapsible tab can read any product
+  metafield (for example custom.how_to_play). A tab with nothing to show is
+  hidden.
 {%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -13,6 +19,10 @@
   assign players = product.metafields.custom.players.value
   assign play_time = product.metafields.custom.play_time.value
   assign age = product.metafields.custom.age.value
+  assign summary = product.metafields.custom.summary | metafield_tag
+  if product.metafields.custom.summary == blank
+    assign summary = section.settings.summary
+  endif
   assign form_id = 'ProductForm-' | append: section.id
 -%}
 
@@ -79,8 +89,8 @@
         {%- endif -%}
       </p>
 
-      {%- if section.settings.summary != blank -%}
-        <div class="product__summary rte">{{ section.settings.summary }}</div>
+      {%- if summary != blank -%}
+        <div class="product__summary rte">{{ summary }}</div>
       {%- endif -%}
 
       {%- if players != blank or play_time != blank or age != blank -%}
@@ -171,6 +181,17 @@
                   if block.settings.page != blank
                     assign tab_content = block.settings.page.content
                   endif
+                  if block.settings.metafield != blank
+                    assign mf_parts = block.settings.metafield | strip | split: '.'
+                    if mf_parts.size == 2
+                      assign mf = product.metafields[mf_parts[0]][mf_parts[1]]
+                      if mf != blank
+                        assign tab_content = mf | metafield_tag
+                      elsif block.settings.metafield_only
+                        assign tab_content = ''
+                      endif
+                    endif
+                  endif
                 -%}
                 {%- if block.settings.heading != blank and tab_content != blank -%}
                   <details class="accordion" {{ block.shopify_attributes }}>
@@ -241,14 +262,13 @@
       "type": "text",
       "id": "kicker",
       "label": "Kicker",
-      "default": "reflection card game",
-      "info": "Small line above the title. Leave empty to use the product type."
+      "info": "Small line above the title, the same on every product. Leave empty to use each product's type."
     },
     {
       "type": "richtext",
       "id": "summary",
       "label": "Short text under the price",
-      "info": "One or two lines. The full description goes in a tab below."
+      "info": "Fallback for products without a custom.summary metafield. One or two lines; the full description goes in a tab below."
     },
     {
       "type": "checkbox",
@@ -265,7 +285,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Editions are product variants (for example English, Türkçe, Español). Players, play time and age come from the product metafields custom.players, custom.play_time and custom.age."
+      "content": "Editions are product variants (for example English, Türkçe, Español). Players, play time and age come from the product metafields custom.players, custom.play_time and custom.age. The short text reads custom.summary first."
     }
   ],
   "blocks": [
@@ -295,6 +315,20 @@
           "id": "page",
           "label": "Or show a page",
           "info": "Useful for shipping or returns text shared by every product."
+        },
+        {
+          "type": "text",
+          "id": "metafield",
+          "label": "Or read a product metafield",
+          "placeholder": "custom.how_to_play",
+          "info": "namespace.key of a product metafield. When the product has it, it wins over the text above."
+        },
+        {
+          "type": "checkbox",
+          "id": "metafield_only",
+          "label": "Hide the tab when the product has no value",
+          "default": true,
+          "info": "Turn off to fall back to the content above."
         }
       ]
     },
