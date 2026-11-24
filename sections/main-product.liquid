@@ -37,9 +37,7 @@
     if link_key.size == 2
       assign external_url = product.metafields[link_key[0]][link_key[1]].value | default: product.metafields[link_key[0]][link_key[1]]
     endif
-    comment
-      Common names for the same field, in case it was created under another key.
-    endcomment
+    # Common names for the same field, in case it was created under another key.
     if external_url == blank
       assign external_url = product.metafields.custom.youwa_url.value | default: product.metafields.custom.youwa_link.value | default: product.metafields.custom.youwa.value
     endif
