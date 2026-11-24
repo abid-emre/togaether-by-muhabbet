@@ -4,6 +4,7 @@
   Accepts:
   - entry {Object}: an "experience" metaobject entry
   - past {Boolean}: render the small past-event card
+  - status {String}: optional, the effective status from tg-experience-status
 {%- endcomment -%}
 {%- liquid
   assign title = entry.name.value | default: entry.system.handle
@@ -47,8 +48,11 @@
     </div>
   {%- endif -%}
 {%- else -%}
+  {%- if status == blank -%}
+    {%- capture status -%}{%- render 'tg-experience-status', entry: entry -%}{%- endcapture -%}
+  {%- endif -%}
   {%- liquid
-    assign status = entry.status.value | downcase | strip
+    assign status = status | strip
     assign seats = entry.seats_left.value
     assign is_full = false
     if seats != blank and seats <= 0

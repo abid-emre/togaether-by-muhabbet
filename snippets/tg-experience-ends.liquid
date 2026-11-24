@@ -1,0 +1,23 @@
+{%- comment -%}
+  Prints the last day (YYYY-MM-DD) after which an experience counts as past, or
+  nothing when it never moves to past on its own. Same rule as
+  tg-experience-status: end_date, else start_date, except an "ongoing" entry
+  with no end date.
+
+  The calendar and the experience page put it in a data-ends attribute, and
+  JavaScript compares it with the visitor's date, because Shopify caches
+  rendered pages and a date check done only in Liquid can go stale.
+
+  Accepts:
+  - entry {Object}: an "experience" metaobject entry
+{%- endcomment -%}
+{%- liquid
+  assign raw = entry.status.value | join: ' ' | downcase | strip
+  if entry.end_date.value != blank
+    echo entry.end_date.value | date: '%Y-%m-%d'
+  elsif entry.start_date.value != blank
+    unless raw contains 'ongoing'
+      echo entry.start_date.value | date: '%Y-%m-%d'
+    endunless
+  endif
+-%}

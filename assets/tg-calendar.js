@@ -1,6 +1,10 @@
 /*
   <tg-calendar>: filters experience cards by time (all / upcoming / past) and
   by city, without reloading the page.
+
+  It also moves events whose last day (data-ends, YYYY-MM-DD) is before the
+  visitor's date from upcoming to past. Shopify caches rendered pages, so the
+  Liquid date check alone can be out of date.
 */
 if (!customElements.get('tg-calendar')) {
   customElements.define(
@@ -24,7 +28,43 @@ if (!customElements.get('tg-calendar')) {
           });
         });
 
+        this.moveEndedToPast();
         this.update();
+      }
+
+      static today() {
+        const now = new Date();
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      }
+
+      moveEndedToPast() {
+        const today = TgCalendar.today();
+        const pastList = this.querySelector('[data-past-list]');
+        let moved = false;
+
+        this.querySelectorAll('[data-card][data-status="upcoming"][data-ends]').forEach((card) => {
+          if (card.dataset.ends >= today) return;
+          const handle = card.dataset.handle;
+          const template =
+            pastList &&
+            [...pastList.querySelectorAll('template[data-past-for]')].find((t) => t.dataset.pastFor === handle);
+          if (template) {
+            pastList.appendChild(template.content.cloneNode(true));
+            template.remove();
+            moved = true;
+          }
+          card.remove();
+        });
+
+        if (!moved) return;
+        const max = parseInt(pastList.dataset.max, 10) || Infinity;
+        const items = [...pastList.querySelectorAll(':scope > [data-card]')];
+        items.sort((a, b) => (b.dataset.sort || '').localeCompare(a.dataset.sort || ''));
+        items.forEach((item, i) => {
+          if (i < max) pastList.appendChild(item);
+          else item.remove();
+        });
       }
 
       update() {

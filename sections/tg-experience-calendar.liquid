@@ -5,6 +5,11 @@
 
   Status comes from snippets/tg-experience-status.liquid, so the calendar and
   the experience page always agree on what counts as past.
+
+  Shopify caches the rendered page, so the date check is repeated in the
+  browser: each upcoming card carries data-ends (its last day), and the past
+  list holds a ready-made past card for it in a <template>. When the visitor's
+  date is after data-ends, tg-calendar.js moves the event to past.
 {%- endcomment -%}
 {%- liquid
   assign upcoming_list = ''
@@ -113,8 +118,17 @@
             {%- for key in upcoming_keys -%}
               {%- assign handle = key | split: '|' | last -%}
               {%- assign entry = shop.metaobjects.experience[handle] -%}
-              <li data-card data-status="upcoming" data-city="{{ entry.city.value.name.value | handle }}">
-                {% render 'tg-experience-card', entry: entry %}
+              {%- capture status -%}{%- render 'tg-experience-status', entry: entry -%}{%- endcapture -%}
+              {%- capture ends -%}{%- render 'tg-experience-ends', entry: entry -%}{%- endcapture -%}
+              {%- assign ends = ends | strip -%}
+              <li
+                data-card
+                data-status="upcoming"
+                data-handle="{{ handle | escape }}"
+                data-city="{{ entry.city.value.name.value | handle }}"
+                {% if ends != blank %}data-ends="{{ ends }}"{% endif %}
+              >
+                {% render 'tg-experience-card', entry: entry, status: status %}
               </li>
             {%- endfor -%}
           </ul>
@@ -126,13 +140,35 @@
             {% render 'tg-icon', icon: 'clock' %}
             {{ 'sections.calendar.past' | t }}
           </h3>
-          <ul class="calendar__past" role="list">
+          <ul class="calendar__past" role="list" data-past-list data-max="{{ section.settings.max_past }}">
             {%- for key in past_keys limit: section.settings.max_past -%}
               {%- assign handle = key | split: '|' | last -%}
               {%- assign entry = shop.metaobjects.experience[handle] -%}
-              <li data-card data-status="past" data-city="{{ entry.city.value.name.value | handle }}">
+              <li
+                data-card
+                data-status="past"
+                data-sort="{{ key | split: '|' | first }}"
+                data-city="{{ entry.city.value.name.value | handle }}"
+              >
                 {% render 'tg-experience-card', entry: entry, past: true %}
               </li>
+            {%- endfor -%}
+            {%- for key in upcoming_keys -%}
+              {%- assign handle = key | split: '|' | last -%}
+              {%- assign entry = shop.metaobjects.experience[handle] -%}
+              {%- capture ends -%}{%- render 'tg-experience-ends', entry: entry -%}{%- endcapture -%}
+              {%- if ends != blank -%}
+                <template data-past-for="{{ handle | escape }}">
+                  <li
+                    data-card
+                    data-status="past"
+                    data-sort="{{ key | split: '|' | first }}"
+                    data-city="{{ entry.city.value.name.value | handle }}"
+                  >
+                    {% render 'tg-experience-card', entry: entry, past: true %}
+                  </li>
+                </template>
+              {%- endif -%}
             {%- endfor -%}
           </ul>
           <p class="calendar__empty text-muted" data-empty hidden>{{ 'sections.calendar.none_in_city' | t }}</p>

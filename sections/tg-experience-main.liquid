@@ -31,8 +31,23 @@
 -%}
 {%- capture status -%}{%- render 'tg-experience-status', entry: entry -%}{%- endcapture -%}
 {%- assign status = status | strip -%}
+{%- capture ends -%}{%- render 'tg-experience-ends', entry: entry -%}{%- endcapture -%}
+{%- assign ends = ends | strip -%}
+{%- capture past_block -%}
+  <h2 class="h3">{{ 'sections.experience.past_title' | t }}</h2>
+  <p class="card-body">{{ 'sections.experience.past_text' | t }}</p>
+  <a class="btn btn-primary" href="{{ section.settings.memory_room_link | default: '/#memory-room' | escape }}">
+    {{- 'sections.experience.memory_room' | t -}}
+  </a>
+  <a class="btn btn-ghost" href="{{ section.settings.calendar_link | default: '/#calendar' | escape }}">
+    {{- 'sections.experience.see_upcoming' | t -}}
+  </a>
+{%- endcapture -%}
 
-<section class="section experience">
+<section
+  class="section experience"
+  {% if status != 'past' and ends != blank %}data-experience-ends="{{ ends }}"{% endif %}
+>
   <div class="page-width">
     <div class="experience__topbar">
       <a class="btn btn-ghost" href="{{ section.settings.calendar_link | default: '/#calendar' | escape }}">
@@ -47,7 +62,11 @@
 
     <div class="experience__grid">
       <div class="experience__main">
-        <span class="tag {% if status == 'past' or is_full %}tag-neutral{% else %}tag-accent{% endif %}">
+        <span
+          class="tag {% if status == 'past' or is_full %}tag-neutral{% else %}tag-accent{% endif %}"
+          data-experience-tag
+          data-past-label="{{ 'sections.calendar.status.past' | t | escape }}"
+        >
           {%- if status == 'past' -%}
             {{ 'sections.calendar.status.past' | t }}
           {%- elsif is_full -%}
@@ -174,15 +193,12 @@
       <aside class="experience__aside">
         <div class="experience__apply card">
           {%- if status == 'past' -%}
-            <h2 class="h3">{{ 'sections.experience.past_title' | t }}</h2>
-            <p class="card-body">{{ 'sections.experience.past_text' | t }}</p>
-            <a class="btn btn-primary" href="{{ section.settings.memory_room_link | default: '/#memory-room' | escape }}">
-              {{- 'sections.experience.memory_room' | t -}}
-            </a>
-            <a class="btn btn-ghost" href="{{ section.settings.calendar_link | default: '/#calendar' | escape }}">
-              {{- 'sections.experience.see_upcoming' | t -}}
-            </a>
+            {{ past_block }}
           {%- else -%}
+            {%- if ends != blank -%}
+              <div data-experience-past hidden>{{ past_block }}</div>
+            {%- endif -%}
+            <div data-experience-open>
             <div class="experience__apply-header">
               <h2 class="h3">
                 {%- if is_full -%}
@@ -236,12 +252,41 @@
                 {%- endif -%}
               </button>
             {%- endform -%}
+            </div>
           {%- endif -%}
         </div>
       </aside>
     </div>
   </div>
 </section>
+
+{%- if status != 'past' and ends != blank -%}
+  <script>
+    // Shopify caches this page, so check the date again in the visitor's browser.
+    (function () {
+      var section = document.currentScript.previousElementSibling;
+      while (section && !section.hasAttribute('data-experience-ends')) section = section.previousElementSibling;
+      if (!section) return;
+      var now = new Date();
+      var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+      var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+      if (section.getAttribute('data-experience-ends') >= today) return;
+
+      var tag = section.querySelector('[data-experience-tag]');
+      if (tag) {
+        tag.textContent = tag.getAttribute('data-past-label');
+        tag.classList.remove('tag-accent');
+        tag.classList.add('tag-neutral');
+      }
+      var open = section.querySelector('[data-experience-open]');
+      var past = section.querySelector('[data-experience-past]');
+      if (open && past) {
+        open.remove();
+        past.hidden = false;
+      }
+    })();
+  </script>
+{%- endif -%}
 
 <script type="application/ld+json">
   {
