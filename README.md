@@ -106,8 +106,8 @@ homepage Shop row reads.
 The descriptions are short Turkish drafts written from the Youwa pages, not
 copies of them. For the exact original text, either paste it in after import or
 export the products from the Youwa admin (Products › Export) and import that
-file instead. Inventory isn't tracked quantity-wise in the file; set stock
-after import.
+file instead. Inventory isn't tracked, because stock lives in the Youwa store; if
+"Track quantity" is on with 0 in stock, Shopify marks the product sold out.
 
 ## Structure
 

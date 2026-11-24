@@ -27,6 +27,6 @@
     {%- else -%}
       {{ product.price | money }}
     {%- endif -%}
-    {%- unless product.available %} · {{ 'products.product.sold_out' | t }}{% endunless -%}
+    {%- unless product.available or product.metafields.custom.youwa_url != blank %} · {{ 'products.product.sold_out' | t }}{% endunless -%}
   </span>
 </a>
