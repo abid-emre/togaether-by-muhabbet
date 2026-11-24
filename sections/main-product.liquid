@@ -33,13 +33,20 @@
   if section.settings.buy_mode == 'external'
     assign sell_external = true
     assign link_key = section.settings.external_metafield | default: 'custom.youwa_url' | strip | split: '.'
+    # The field can be a URL (value is text) or a Link (value has .url and .text).
+    # Common names for the same field are tried after the configured key.
     assign external_url = ''
     if link_key.size == 2
-      assign external_url = product.metafields[link_key[0]][link_key[1]].value | default: product.metafields[link_key[0]][link_key[1]]
+      assign link_field = product.metafields[link_key[0]][link_key[1]]
+      assign external_url = link_field.value.url | default: link_field.value
     endif
-    # Common names for the same field, in case it was created under another key.
     if external_url == blank
-      assign external_url = product.metafields.custom.youwa_url.value | default: product.metafields.custom.youwa_link.value | default: product.metafields.custom.youwa.value
+      assign link_field = product.metafields.custom.youwa_link
+      assign external_url = link_field.value.url | default: link_field.value
+    endif
+    if external_url == blank
+      assign link_field = product.metafields.custom.youwa_url
+      assign external_url = link_field.value.url | default: link_field.value
     endif
     if external_url == blank
       assign external_url = section.settings.external_fallback_url
@@ -343,7 +350,7 @@
       "id": "external_metafield",
       "label": "Product metafield with the Youwa link",
       "default": "custom.youwa_url",
-      "info": "namespace.key, as shown in Settings › Custom data › Products."
+      "info": "namespace.key, as shown in Settings › Custom data › Products. URL and Link fields both work."
     },
     {
       "type": "url",
