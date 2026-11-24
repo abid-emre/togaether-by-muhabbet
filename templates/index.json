@@ -1,8 +1,18 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "tg-hero",
       "settings": {
+        "image": "shopify://shop_images/claude_communnity_house_alternatif_3.jpg",
         "overlay": 35,
         "height": "large",
         "heading_line_1": "come as you are.",
@@ -369,37 +379,43 @@
         "logo_1": {
           "type": "logo",
           "settings": {
-            "name": "partner"
+            "name": "partner",
+            "link": ""
           }
         },
         "logo_2": {
           "type": "logo",
           "settings": {
-            "name": "partner"
+            "name": "partner",
+            "link": ""
           }
         },
         "logo_3": {
           "type": "logo",
           "settings": {
-            "name": "partner"
+            "name": "partner",
+            "link": ""
           }
         },
         "logo_4": {
           "type": "logo",
           "settings": {
-            "name": "partner"
+            "name": "partner",
+            "link": ""
           }
         },
         "logo_5": {
           "type": "logo",
           "settings": {
-            "name": "partner"
+            "name": "partner",
+            "link": ""
           }
         },
         "logo_6": {
           "type": "logo",
           "settings": {
-            "name": "partner"
+            "name": "partner",
+            "link": ""
           }
         }
       },
@@ -420,6 +436,21 @@
         "surface": true
       }
     },
+    "shop": {
+      "type": "tg-shop",
+      "disabled": true,
+      "settings": {
+        "kicker": "the shop",
+        "heading": "take the circle home",
+        "intro": "<p>The card games we play at our gatherings, in English, Türkçe and Español.</p>",
+        "collection": "",
+        "limit": 3,
+        "link_label": "see all",
+        "link": "",
+        "anchor": "shop",
+        "surface": false
+      }
+    },
     "contact": {
       "type": "tg-contact",
       "settings": {
@@ -434,19 +465,6 @@
         "corporate_text": "<p>Bring a hosted circle to your team, offsite or event.</p>",
         "corporate_button": "start the conversation",
         "corporate_success": "Thank you. We'll reply within a few days."
-      }
-    },
-    "shop": {
-      "type": "tg-shop",
-      "disabled": true,
-      "settings": {
-        "kicker": "the shop",
-        "heading": "take the circle home",
-        "intro": "<p>The card games we play at our gatherings, in English, Türkçe and Español.</p>",
-        "limit": 3,
-        "link_label": "see all",
-        "anchor": "shop",
-        "surface": false
       }
     }
   },
