@@ -30,6 +30,15 @@
     "memory_room": {
       "type": "tg-memory-room",
       "blocks": {
+        "slide_bbU3xq": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/koc_alternatif_1.jpg",
+            "event": "community event",
+            "city": "koç alumni",
+            "year": "2026"
+          }
+        },
         "slide_1": {
           "type": "slide",
           "settings": {
@@ -88,6 +97,7 @@
         }
       },
       "block_order": [
+        "slide_bbU3xq",
         "slide_1",
         "slide_2",
         "slide_3",
