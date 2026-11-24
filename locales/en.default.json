@@ -106,7 +106,8 @@
       "decrease": "Decrease quantity",
       "increase": "Increase quantity",
       "unavailable": "Unavailable",
-      "price_from": "from {{ price }}"
+      "price_from": "from {{ price }}",
+      "opens_new_window": "(opens Youwa in a new window)"
     }
   },
   "templates": {

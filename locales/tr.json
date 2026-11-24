@@ -106,7 +106,8 @@
       "decrease": "Adedi azalt",
       "increase": "Adedi artır",
       "unavailable": "Mevcut değil",
-      "price_from": "başlangıç {{ price }}"
+      "price_from": "başlangıç {{ price }}",
+      "opens_new_window": "(Youwa yeni pencerede açılır)"
     }
   },
   "templates": {
