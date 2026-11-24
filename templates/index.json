@@ -43,8 +43,9 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "event": "collective flow",
-            "city": "büyükada",
+            "image": "shopify://shop_images/51e579b8-31a5-432c-9118-e1ba7f640c2f.jpg",
+            "event": "bashaques-community circle",
+            "city": "İzmir",
             "year": "2026"
           }
         },
