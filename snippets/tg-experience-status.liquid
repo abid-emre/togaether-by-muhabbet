@@ -1,7 +1,18 @@
 {%- comment -%}
   Prints an experience's effective status: upcoming, ongoing or past.
-  The status field wins, except that an "upcoming" (or empty) entry whose start
-  date has passed counts as past, so events move to past on their own.
+
+  - "past" in the status field always wins.
+  - Otherwise, once the experience's last day (end_date, or start_date when
+    there is no end date) is before today, it counts as past, so events move
+    to past on their own. An "ongoing" entry without an end date stays ongoing
+    until someone sets it to past.
+
+  The status field may be a single choice or a list (for example
+  ["Upcoming"]), so it is joined and matched loosely. Dates are compared as
+  numbers (YYYYMMDD), not as strings.
+
+  Liquid output is cached, so the calendar and the experience page also check
+  the date again in the visitor's browser (see tg-experience-ends).
 
   Accepts:
   - entry {Object}: an "experience" metaobject entry
@@ -10,15 +21,26 @@
   {% capture status %}{% render 'tg-experience-status', entry: entry %}{% endcapture %}
 {%- endcomment -%}
 {%- liquid
-  assign today = 'now' | date: '%Y-%m-%d'
-  assign status = entry.status.value | downcase | strip
-  assign start = entry.start_date.value | date: '%Y-%m-%d'
-  if status == blank or status == 'upcoming'
-    if start != blank and start < today
+  assign raw = entry.status.value | join: ' ' | downcase | strip
+  assign status = 'upcoming'
+  if raw contains 'past'
+    assign status = 'past'
+  elsif raw contains 'ongoing'
+    assign status = 'ongoing'
+  endif
+
+  if status != 'past'
+    assign today = 'now' | date: '%Y%m%d' | plus: 0
+    assign last_day = 0
+    if entry.end_date.value != blank
+      assign last_day = entry.end_date.value | date: '%Y%m%d' | plus: 0
+    elsif status == 'upcoming' and entry.start_date.value != blank
+      assign last_day = entry.start_date.value | date: '%Y%m%d' | plus: 0
+    endif
+    if last_day > 0 and last_day < today
       assign status = 'past'
-    else
-      assign status = 'upcoming'
     endif
   endif
+
   echo status
 -%}

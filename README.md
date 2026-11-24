@@ -54,8 +54,12 @@ Create these in **Settings › Custom data › Metaobjects**. Field keys must ma
 `introduction`, `location`, `city` (reference to City), `start_date` (date),
 `dates_text`, `duration`, `event_type`, `language`, `price`, `quota` (integer),
 `seats_left` (integer), `host` (reference to Host), `photo` (image),
-`instagram_post` (URL), `more_photos` (URL). An upcoming entry whose start date
-has passed moves to past on its own. `seats_left` of 0 shows "join the waitlist".
+`instagram_post` (URL), `more_photos` (URL), and optionally `end_date` (date)
+for events that run over several days. An entry moves to past on its own once
+its last day (`end_date`, else `start_date`) is before today; an "ongoing"
+entry without an end date stays ongoing until you set it to past. The theme
+checks this again in the visitor's browser, because Shopify caches pages.
+`seats_left` of 0 shows "join the waitlist".
 
 **City** (`city`): `name`, `country`.
 
